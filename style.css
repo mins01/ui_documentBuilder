@@ -1,0 +1,5 @@
+@charset "utf-8";
+
+.editable[contenteditable]{
+    outline:1px dotted #999;
+}
