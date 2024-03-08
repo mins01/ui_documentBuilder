@@ -88,6 +88,14 @@
 }
 
 
+.doc *[data-type="layout"]:empty::after{
+    content: "LAYOUT";
+    color: #99999999;
+    white-space: nowrap;
+    display: block;
+    background-color: #99999911;
+}
+
 .doc *[data-type="content"]:empty::after{
     content: "EMPTY";
     color: #99999999;
@@ -106,6 +114,7 @@
 /* 레이아웃 설정부 */
 .doc *[data-type="layout"][data-layout="flex"]{
     display: flex;
+    flex-wrap: wrap;
 }
 .doc *[data-type="layout"][data-layout="flex"] > *{
     flex: 1 1 auto;;

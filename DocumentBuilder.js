@@ -32,6 +32,9 @@ class DocumentBuilder{
     get focusElement(){
         return this.container.querySelector('*[data-focus]');
     }
+    get doc(){
+        return this.container.querySelector('.doc');
+    }
     setFocus(el){
         if(el){
             const target = el.closest('*[data-type]');
@@ -45,22 +48,26 @@ class DocumentBuilder{
         }
     }
 
-    toPreviousSibling(el){
+    toPreviousSibling(el,target=null){
         if(!el){ console.warn('대상 element가 없습니다.'); return false; }
         if(el.parentElement.dataset.type!='layout'){ console.warn('부모가 data-type="layout"이 아닙니다.'); return false; }
         if(!el.previousElementSibling){ console.warn('이전 이웃이 없습니다.'); return false; }
-        const target = el.previousElementSibling;
+        if(!target){
+            target = el.previousElementSibling;
+        }
         target.insertAdjacentElement('beforebegin',el);
     }
-    toNextSibling(el){
+    toNextSibling(el,target=null){
         if(!el){ console.warn('대상 element가 없습니다.'); return false; }
         if(el.parentElement.dataset.type!='layout'){ console.warn('부모가 data-type="layout"이 아닙니다.'); return false; }
         if(!el.nextElementSibling){ console.warn('다음 이웃이 없습니다.'); return false; }
-        const target = el.nextElementSibling;
+        if(!target){
+            target = el.nextElementSibling;
+        }
         target.insertAdjacentElement('afterend',el);
     }
     
-    appendWithCreateElementWithFocusElement(tag,dataset = null, className = null){
+    appendWithCreateElementToFocusElement(tag,dataset = null, className = null){
         const parent = this.focusElement;
         if(!parent) return;
         const el = this.createElement(tag,dataset, className);
@@ -82,6 +89,9 @@ class DocumentBuilder{
     }
     append(parent,el){
         parent.append(el);
+    }
+    toHtml(){
+        return this.doc.outerHTML.replace(/contenteditable="true"/g,'');
     }
 
 }

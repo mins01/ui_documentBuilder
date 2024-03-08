@@ -133,13 +133,13 @@
                                     <li class="w-100">
                                         <div class="nav-link px-0">FRAME</div>
                                         <ul class="nav ms-3  d-flex flex-row gap-3">
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1"> NORMAL </button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1"> FLEX - ROW</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1"> FLEX - COLUMN</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1"> GRID - 2 x N</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1"> GRID - 3 x N</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1"> GRID - 4 x N</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1"> COL</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{type:'layout',layout:'normal'})"> NORMAL </button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{type:'layout',layout:'flex'})"> FLEX - ROW</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{type:'layout',layout:'flex-column'})"> FLEX - COLUMN</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{type:'layout',layout:'grid-2'})"> GRID - 2 x N</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{type:'layout',layout:'grid-3'})"> GRID - 3 x N</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{type:'layout',layout:'grid-4'})"> GRID - 4 x N</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{type:'layout',layout:'col'})"> COL</button></li>
 
                                         </ul>
                                     </li>
@@ -151,12 +151,12 @@
                                     <li class="w-100">
                                         <div class="nav-link px-0">HEAD</div>
                                         <ul class="nav ms-3  d-flex flex-row gap-3">
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementWithFocusElement('h1',{type:'content'})"> H1 </button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementWithFocusElement('h2',{type:'content'})"> H2 </button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementWithFocusElement('h3',{type:'content'})"> H3 </button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementWithFocusElement('h4',{type:'content'})"> H4 </button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementWithFocusElement('h5',{type:'content'})"> H5 </button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementWithFocusElement('h6',{type:'content'})"> H6 </button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h1',{type:'content'})"> H1 </button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h2',{type:'content'})"> H2 </button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h3',{type:'content'})"> H3 </button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h4',{type:'content'})"> H4 </button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h5',{type:'content'})"> H5 </button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h6',{type:'content'})"> H6 </button></li>
                                         </ul>
                                     </li>
                                     <li class="w-100">
@@ -216,12 +216,17 @@
                     <button type="button" class="btn btn-primary btn-sm" onclick="docb.toNextSibling(docb.focusElement)" >
                         다음
                     </button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="console.log(docb.toHtml())" >
+                        toHtml
+                    </button>
+                    
                 </div>
             </div>
     
             
         </div>
     </div>
+    <div></div>
     
 </body>
 </html>
