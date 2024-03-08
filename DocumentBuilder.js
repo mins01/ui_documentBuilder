@@ -5,17 +5,35 @@ class DocumentBuilder{
     }
     addEventListener(){
         this.container.addEventListener('click',this.cbclick);
+        this.container.addEventListener('keypress',this.cbkeypress);
+        this.container.addEventListener('keydown',this.cbkeydown);
     }
     removeEventListener(){
         this.container.removeEventListener('click',this.cbclick);
-
+        this.container.removeEventListener('keypress',this.cbkeypress);
+        this.container.removeEventListener('keydown',this.cbkeydown);
     }
     cbclick=(event)=>{ this.onclick(event); }
     onclick(event){
         console.log('onclick');
+        // event.stopPropagation();
+        event.preventDefault();
         this.clearFocus()
         const target = event.target
         this.setFocus(target)
+    }
+    cbkeypress=(event)=>{ this.onkeypress(event); }
+    onkeypress(event){
+        console.log('onkeypress');
+        // event.stopPropagation();
+        // event.preventDefault();
+        return false;
+    }
+    cbkeydown=(event)=>{ this.onkeydown(event); }
+    onkeydown(event){
+        console.log('onkeydown');
+        // event.stopPropagation();
+        // event.preventDefault();
     }
     clearFocus(target = null){
         if(!target){
@@ -43,7 +61,7 @@ class DocumentBuilder{
         if(!target){return false;}
         
         target.dataset.focus="";
-        if(target.dataset.type=='content'){
+        if(target.dataset.type=='block' || target.dataset.type=='inline'){
             target.contentEditable = true
             target.focus();
         }
@@ -54,7 +72,7 @@ class DocumentBuilder{
     toPreviousSibling(el,target=null){
         if(!el){ console.warn('대상 element가 없습니다.'); return false; }
         if(!target){
-            if(el.parentElement.dataset.type!='layout'){ console.warn('부모가 data-type="layout"이 아닙니다.'); return false; }
+            if(el.parentElement.dataset.type!='layout' || el.parentElement.dataset.type!='block'){ console.warn('부모가 data-type="layout" || data-type="block" 이 아닙니다.'); return false; }
             if(!el.previousElementSibling){ console.warn('이전 이웃이 없습니다.'); return false; }
             target = el.previousElementSibling;
         }
@@ -64,7 +82,7 @@ class DocumentBuilder{
     toNextSibling(el,target=null){
         if(!el){ console.warn('대상 element가 없습니다.'); return false; }
         if(!target){
-            if(el.parentElement.dataset.type!='layout'){ console.warn('부모가 data-type="layout"이 아닙니다.'); return false; }
+            if(el.parentElement.dataset.type!='layout' || el.parentElement.dataset.type!='block'){ console.warn('부모가 data-type="layout" || data-type="block" 이 아닙니다.'); return false; }
             if(!el.nextElementSibling){ console.warn('다음 이웃이 없습니다.'); return false; }
             target = el.nextElementSibling;
         }
@@ -84,52 +102,56 @@ class DocumentBuilder{
         if(!focusElement || !toEl || focusElement===toEl || focusElement.contains(toEl) || toEl.classList.contains('page') || focusElement.classList.contains('page')){
             // 동작하면 안되는 조건
 
-        }else if(toEl.dataset.type=='layout'){
+        }else if(focusElement.dataset.type=='layout'){
             if(toEl.dataset.type=='layout'){
-                if(focusElement.nextElementSibling === toEl){
-                    this.toNextSibling(focusElement,toEl);
-                }else{
-                    this.toPreviousSibling(focusElement,toEl);
-                }
+                if(focusElement.nextElementSibling === toEl){ this.toNextSibling(focusElement,toEl); }
+                else{ this.toPreviousSibling(focusElement,toEl); }
             }
-        }else if(toEl.dataset.type=='content'){
+        }else if(focusElement.dataset.type=='block'){
             if(toEl.dataset.type=='layout'){
-                if(focusElement.nextElementSibling === toEl){
-                    this.toNextSibling(focusElement,toEl);
-                }else{
-                    this.toPreviousSibling(focusElement,toEl);
-                }
-            }else if(toEl.dataset.type=='content'){
-                if(focusElement.nextElementSibling === toEl){
-                    this.toNextSibling(focusElement,toEl);
-                }else{
-                    this.toPreviousSibling(focusElement,toEl);
-                }
+                toEl.append(focusElement)
+            }else if(toEl.dataset.type=='block'){
+                if(focusElement.nextElementSibling === toEl){ this.toNextSibling(focusElement,toEl); }
+                else{ this.toPreviousSibling(focusElement,toEl); }
                 
             }
+        }else if(focusElement.dataset.type=='inline'){
+            if(toEl.dataset.type=='block'){
+                toEl.append(focusElement)
+            }else if(toEl.dataset.type=='inline'){
+                if(focusElement.nextElementSibling === toEl){ this.toNextSibling(focusElement,toEl); }
+                else{ this.toPreviousSibling(focusElement,toEl); }
+            }
         }
-        
-        
     }
+    // moveTo(target,toEl){
+    //     if(target.nextElementSibling === toEl){ this.toNextSibling(target,toEl); }
+    //     else{ this.toPreviousSibling(target,toEl); }
+    // }
     
-    appendWithCreateElementToFocusElement(tag,dataset = null, className = null){
+    appendWithCreateElementToFocusElement(tag,attributes = null, className = null, child = null){
         const parent = this.focusElement;
         if(!parent) return;
-        const el = this.createElement(tag,dataset, className);
+        const el = this.createElement(tag,attributes, className, child);
         this.append(parent,el);
     }
-    appendWithCreateElement(parent,tag,dataset = null, className = null){
-        const el = this.createElement(tag,dataset, className);
+    appendWithCreateElement(parent,tag,attributes = null, className = null, child = null){
+        const el = this.createElement(tag,attributes, className, child);
         this.append(parent,el);
     }
-    createElement(tag,dataset = null, className = null){
+    createElement(tag,attributes=null, className = null, child = null){
         const el = document.createElement(tag);
-        if(dataset){
-            for(let k in dataset){
-                el.dataset[k] = dataset[k];
+        if(attributes){
+            for(let k in attributes){
+                el.setAttribute(k,attributes[k]);
             }
         }
         if(className) el.className = className
+        if(typeof child === "string"){
+            el.textContent = child
+        }else if(child){
+            el.append(child);
+        } 
         return el;
     }
     append(parent,el){
@@ -146,6 +168,15 @@ class DocumentBuilder{
     styleFocusElement(k,v){
         if(!this.focusElement) return false;
         this.focusElement.style[k]=v;
+    }
+    toggleStyleFocusElement(k,v){
+        if(!this.focusElement) return false;
+        if(this.focusElement.style[k]==v){
+            this.focusElement.style[k]=null;
+        }else{
+            this.focusElement.style[k]=v;
+        }
+        
     }
 
     toHtml(){
