@@ -61,7 +61,7 @@
         })
     </script>
 </head>
-<body  class="app-layout">
+<body  class="app-layout edit">
     <div class="min-vh-100 d-flex flex-column">
         <div class="bg-light">
             <nav class="navbar navbar-expand-sm navbar-light bg-light" >
@@ -252,10 +252,11 @@
                     </div>
                 </div>
                 <div id="side-right" class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" style="max-width: 300px;">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="docb.toPreviousSibling(docb.focusElement)" >이전</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="docb.toNextSibling(docb.focusElement)" >다음</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="console.log(docb.toHtml())" >toHtml</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="lfe1.toggle()" >lfe1.toggle()</button>
+                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.toPreviousSibling(docb.focusElement)" >이전</button>
+                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.toNextSibling(docb.focusElement)" >다음</button>
+                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="console.log(docb.toHtml())" >toHtml</button>
+                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="lfe1.toggle()" >lfe1.toggle()</button>
+                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="document.body.classList.toggle('edit')" >preview</button>
                     
                 </div>
             </div>

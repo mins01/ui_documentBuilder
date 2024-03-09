@@ -60,7 +60,7 @@
 
 
 /* element dashed box */
-.doc *[data-type]::before {
+.edit .doc *[data-type]::before {
     content: var(--el-name);
     color:#00000033;
     display: block;
@@ -79,7 +79,7 @@
     background-color: #99999933;
     z-index: 1;
 }
-.doc *[data-type]::after {
+.edit .doc *[data-type]::after {
     
     content: "";
     color:#00000033;
@@ -100,38 +100,38 @@
     pointer-events: none;
 }
 
-.doc *[data-focus]{
+.edit .doc *[data-focus]{
     outline: 1px dashed #006eff99;
     outline:none;
     caret-color: rgb(119, 15, 15);
 }
-.doc *[data-type]::after{
+.edit .doc *[data-type]::after{
     border-width:1px;
     border-style: dashed;
 }
-.doc *[data-type][data-focus]::after{
+.edit .doc *[data-type][data-focus]::after{
     border-width:1px 1px 1px 5px;
     border-style: dashed dashed dashed solid;
     animation: ani-border-color 0.4s steps(2, jump-start) 0s infinite alternate both;
 }
-.doc *[data-type="layout"]::after{
+.edit .doc *[data-type="layout"]::after{
     border-width:1px 1px 1px 5px;
     border-style: dashed dashed dashed double;
     border-color: #33333333;
 }
-.doc *[data-type="block"]::after{
+.edit .doc *[data-type="block"]::after{
     border-color: #00660033;
 }
-.doc *[data-type="inline"]::after{
+.edit .doc *[data-type="inline"]::after{
     border-color: #00006633;
 }
-.doc *[data-type="layout"][data-focus]::after{
+.edit .doc *[data-type="layout"][data-focus]::after{
     animation-name: ani-layout-border-color;
 }
-.doc *[data-type="block"][data-focus]::after{
+.edit .doc *[data-type="block"][data-focus]::after{
     animation-name: ani-block-border-color;
 }
-.doc *[data-type="inline"][data-focus]::after{
+.edit .doc *[data-type="inline"][data-focus]::after{
     animation-name: ani-inline-border-color;
 }
 
@@ -144,7 +144,7 @@
     background-color: #99999911;
 } */
 
-.doc *[data-type="block"]:empty::after{
+.edit .doc *[data-type="block"]:empty::after{
     content: "EMPTY";
     color: #99999933;
     background-color: #99999911;
@@ -228,3 +228,13 @@
 .builder-containr .doc span[data-type="inline"]{--el-name:"<span>"}
 .builder-containr .doc button[data-type="inline"]{--el-name:"<button>"}
 .builder-containr .doc button[data-type="block"]{--el-name:"<button>"}
+
+
+
+/* lfe */
+.lfe-container{
+    display: none;
+}
+.edit .lfe-container{
+    display: block;
+}
