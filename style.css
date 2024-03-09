@@ -60,7 +60,7 @@
 
 
 /* element dashed box */
-.edit .doc *[data-type]::before {
+.edit-mode .doc *[data-type]::before {
     content: var(--el-name);
     color:#00000033;
     display: block;
@@ -79,7 +79,7 @@
     background-color: #99999933;
     z-index: 1;
 }
-.edit .doc *[data-type]::after {
+.edit-mode .doc *[data-type]::after {
     
     content: "";
     color:#00000033;
@@ -100,38 +100,38 @@
     pointer-events: none;
 }
 
-.edit .doc *[data-focus]{
+.edit-mode .doc *[data-focus]{
     outline: 1px dashed #006eff99;
     outline:none;
     caret-color: rgb(119, 15, 15);
 }
-.edit .doc *[data-type]::after{
+.edit-mode .doc *[data-type]::after{
     border-width:1px;
     border-style: dashed;
 }
-.edit .doc *[data-type][data-focus]::after{
+.edit-mode .doc *[data-type][data-focus]::after{
     border-width:1px 1px 1px 5px;
     border-style: dashed dashed dashed solid;
     animation: ani-border-color 0.4s steps(2, jump-start) 0s infinite alternate both;
 }
-.edit .doc *[data-type="layout"]::after{
+.edit-mode .doc *[data-type="layout"]::after{
     border-width:1px 1px 1px 5px;
     border-style: dashed dashed dashed double;
     border-color: #33333333;
 }
-.edit .doc *[data-type="block"]::after{
+.edit-mode .doc *[data-type="block"]::after{
     border-color: #00660033;
 }
-.edit .doc *[data-type="inline"]::after{
+.edit-mode .doc *[data-type="inline"]::after{
     border-color: #00006633;
 }
-.edit .doc *[data-type="layout"][data-focus]::after{
+.edit-mode .doc *[data-type="layout"][data-focus]::after{
     animation-name: ani-layout-border-color;
 }
-.edit .doc *[data-type="block"][data-focus]::after{
+.edit-mode .doc *[data-type="block"][data-focus]::after{
     animation-name: ani-block-border-color;
 }
-.edit .doc *[data-type="inline"][data-focus]::after{
+.edit-mode .doc *[data-type="inline"][data-focus]::after{
     animation-name: ani-inline-border-color;
 }
 
@@ -144,7 +144,7 @@
     background-color: #99999911;
 } */
 
-.edit .doc *[data-type="block"]:empty::after{
+.edit-mode .doc *[data-type="block"]:empty::after{
     content: "EMPTY";
     color: #99999933;
     background-color: #99999911;
@@ -202,32 +202,30 @@
 
 /* 태그별 전용 설정 */
 .builder-containr .doc button[data-type="block"]{
-    display: inline-block;
-    padding:0.25em 0.25em;
-    min-height: 2.5em;
+    display: block;
     margin-left: auto; margin-right: auto;
     width: 100%;
 }
-.builder-containr .doc button[data-type="block"]::before{
+/* .builder-containr .doc button[data-type="block"]::before{
     content: none;
 }
 .builder-containr .doc button[data-type="block"]::after{
     content: none;
-}
+} */
 /* quotes */ 
 .builder-containr .doc *[data-type="layout"]{--el-name:"LAYOUT: "attr(data-layout)}
-.builder-containr .doc h1[data-type="block"]{--el-name:"<h1>"}
-.builder-containr .doc h2[data-type="block"]{--el-name:"<h2>"}
-.builder-containr .doc h3[data-type="block"]{--el-name:"<h3>"}
-.builder-containr .doc h4[data-type="block"]{--el-name:"<h4>"}
-.builder-containr .doc h5[data-type="block"]{--el-name:"<h5>"}
-.builder-containr .doc h6[data-type="block"]{--el-name:"<h6>"}
-.builder-containr .doc h6[data-type="block"]{--el-name:"<h6>"}
-.builder-containr .doc p[data-type="block"]{--el-name:"<p>"}
-.builder-containr .doc div[data-type="block"]{--el-name:"<div>"}
+.builder-containr .doc h1[data-type="block"]{--el-name:"BLOCK: <h1>"}
+.builder-containr .doc h2[data-type="block"]{--el-name:"BLOCK: <h2>"}
+.builder-containr .doc h3[data-type="block"]{--el-name:"BLOCK: <h3>"}
+.builder-containr .doc h4[data-type="block"]{--el-name:"BLOCK: <h4>"}
+.builder-containr .doc h5[data-type="block"]{--el-name:"BLOCK: <h5>"}
+.builder-containr .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>"}
+.builder-containr .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>"}
+.builder-containr .doc p[data-type="block"]{--el-name:"BLOCK: <p>"}
+.builder-containr .doc div[data-type="block"]{--el-name:"BLOCK: <div>"}
 .builder-containr .doc span[data-type="inline"]{--el-name:"<span>"}
 .builder-containr .doc button[data-type="inline"]{--el-name:"<button>"}
-.builder-containr .doc button[data-type="block"]{--el-name:"<button>"}
+.builder-containr .doc button[data-type="block"]{--el-name:"BLOCK: <button>"}
 
 
 
@@ -235,6 +233,6 @@
 .lfe-container{
     display: none;
 }
-.edit .lfe-container{
+.edit-mode .lfe-container{
     display: block;
 }

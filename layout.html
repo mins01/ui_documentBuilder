@@ -56,12 +56,12 @@
             //     console.log('ontoggle',lfe.isShow,this.wrap,this.target)
             // }
 
-            globalThis.docb = new DocumentBuilder(document.querySelector('#docb-container'),lfe)
+            globalThis.docb = new DocumentBuilder(document.querySelector('#docb-container'),lfe,document.querySelector('.app-layout'))
             docb.addEventListener();
         })
     </script>
 </head>
-<body  class="app-layout edit">
+<body  class="app-layout edit-mode">
     <div class="min-vh-100 d-flex flex-column">
         <div class="bg-light">
             <nav class="navbar navbar-expand-sm navbar-light bg-light" >
@@ -185,7 +185,7 @@
                                         <div class="nav-link px-0">CONTENT</div>
                                         <ul class="nav ms-3  d-flex flex-row gap-3">
                                             <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('a',{'data-type':'block'})"> LINK </button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('button',{'data-type':'block'},null,docb.createElement('span',{'data-type':'inline'}))"> BUTTON </button></li>                                            
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('button',{'data-type':'block'},null)"> BUTTON </button></li>                                            
                                             <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('image',{'data-type':'block'})"> IMAGE </button></li>                                            
                                         </ul>
                                     </li>
@@ -255,8 +255,8 @@
                     <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.toPreviousSibling(docb.focusElement)" >이전</button>
                     <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.toNextSibling(docb.focusElement)" >다음</button>
                     <button type="button" class="btn btn-primary btn-sm m-1" onclick="console.log(docb.toHtml())" >toHtml</button>
-                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="lfe1.toggle()" >lfe1.toggle()</button>
-                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="document.body.classList.toggle('edit')" >preview</button>
+                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="lfe.toggle()" >lfe.toggle()</button>
+                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.editMode = !docb.editMode" >edit/preview</button>
                     
                 </div>
             </div>
@@ -278,10 +278,14 @@
                             
                         </div>
                         
-                        <div class="btn-group btn-group-sm" role="group">
+                        <!-- <div class="btn-group btn-group-sm" role="group">
                             <button type="button" class="btn btn-success" onmousedown="docb.toggleStyleFocusElement('fontWeight','bold');return false;"><i class="bi bi-type-bold"></i></button>
                             <button type="button" class="btn btn-success" onmousedown="docb.toggleStyleFocusElement('fontStyle','italic');return false;"><i class="bi bi-type-italic"></i></button>
-                            
+                        </div> -->
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-success" onmousedown="docb.execCommand('bold');return false;"><i class="bi bi-type-bold"></i></button>
+                            <button type="button" class="btn btn-success" onmousedown="docb.execCommand('italic');return false;"><i class="bi bi-type-italic"></i></button>
+                            <button type="button" class="btn btn-success" onmousedown="docb.execCommand('removeFormat');return false;"><i class="bi bi-eraser"></i></button>
                         </div>
                         <div class="btn-group btn-group-sm" role="group">
                             <button type="button" class="btn btn-success" onmousedown="docb.toggleStyleFocusElement('textAlign','left');return false;"><i class="bi bi-text-left"></i></button>
@@ -290,9 +294,10 @@
                             <!-- <button type="button" class="btn btn-secondary" onmousedown="docb.styleFocusElement('textAlign',null);return false;"><i class="bi bi-x-circle"></i></button> -->
                         </div>
 
-                        <div class="btn-group btn-group-sm" role="group">
+                        <!-- <div class="btn-group btn-group-sm" role="group">
                             <button type="button" class="btn btn-danger" onclick="docb.styleFocusElement('cssText',null)"><i class="bi bi-eraser"></i></button>
-                        </div>
+                        </div> -->
+                        
                         
                         <div class="btn-group btn-group-sm" role="group">
                             <button type="button" class="btn btn-danger" onclick="docb.removeFocusElement();"><i class="bi bi-trash"></i></button>

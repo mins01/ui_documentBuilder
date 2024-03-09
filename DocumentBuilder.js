@@ -1,26 +1,38 @@
 class DocumentBuilder{
-    constructor(container,lfe){
-        this.container = container;
+    constructor(builderContainer,lfe,appContainer){
+        this.builderContainer = builderContainer;
+        this.appContainer = appContainer
         this.lfe = lfe
     }
+    get editMode(){
+        return this.appContainer.classList.contains('edit-mode');
+    }
+    /**
+     * @param {any} b
+     */
+    set editMode(b){
+        b?this.appContainer.classList.add('edit-mode'):this.appContainer.classList.remove('edit-mode')
+        this.blur();
+    }
     addEventListener(){
-        this.container.addEventListener('click',this.cbclick);
-        this.container.addEventListener('keypress',this.cbkeypress);
-        this.container.addEventListener('keydown',this.cbkeydown);
+        this.builderContainer.addEventListener('click',this.cbclick);
+        // this.builderContainer.addEventListener('keypress',this.cbkeypress);
+        // this.builderContainer.addEventListener('keydown',this.cbkeydown);
     }
     removeEventListener(){
-        this.container.removeEventListener('click',this.cbclick);
-        this.container.removeEventListener('keypress',this.cbkeypress);
-        this.container.removeEventListener('keydown',this.cbkeydown);
+        this.builderContainer.removeEventListener('click',this.cbclick);
+        // this.builderContainer.removeEventListener('keypress',this.cbkeypress);
+        // this.builderContainer.removeEventListener('keydown',this.cbkeydown);
     }
     cbclick=(event)=>{ this.onclick(event); }
     onclick(event){
         console.log('onclick');
         // event.stopPropagation();
-        event.preventDefault();
-        this.clearFocus()
-        const target = event.target
-        this.setFocus(target)
+        // event.preventDefault();
+        if(event.target != this.focusElement){
+            this.blur()
+            this.focus(event.target)
+        }
     }
     cbkeypress=(event)=>{ this.onkeypress(event); }
     onkeypress(event){
@@ -35,11 +47,19 @@ class DocumentBuilder{
         // event.stopPropagation();
         // event.preventDefault();
     }
-    clearFocus(target = null){
+    get focusElement(){
+        return this.builderContainer.querySelector('*[data-focus]');
+    }
+    get doc(){
+        return this.builderContainer.querySelector('.doc');
+    }
+
+    blur(target = null){
         if(!target){
             target = this.focusElement;
         }
-        if(target){ 
+        if(target){
+            this.removeEventListenerForfocusElement(target);
             delete target.dataset.focus; 
             if(target.contentEditable){
                 target.contentEditable = false;
@@ -48,26 +68,52 @@ class DocumentBuilder{
         }
         this.lfe.hide()
     }
-    get focusElement(){
-        return this.container.querySelector('*[data-focus]');
-    }
-    get doc(){
-        return this.container.querySelector('.doc');
-    }
-    setFocus(el){
+    
+    focus(el){
         if(!el){return false;}
         
         const target = el.closest('*[data-type]');
         if(!target){return false;}
         
         target.dataset.focus="";
+        this.addEventListenerForfocusElement(target);
         if(target.dataset.type=='block' || target.dataset.type=='inline'){
             target.contentEditable = true
             target.focus();
+            if(target.textContent.length == 0|| target.tagName=='BUTTON'){
+                const range = window.document.createRange();
+                range.setStart(target, 0);
+                range.setEnd(target, 0);
+        
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
         }
         this.lfe.show(target)
         return true;
     }
+    addEventListenerForfocusElement(focusElement){
+        if(!focusElement) return false;
+        focusElement.addEventListener('click',this.cbclickForFocusElement);
+        focusElement.addEventListener('keypress',this.cbkeypressForFocusElement);
+    }
+    removeEventListenerForfocusElement(focusElement){
+        if(!focusElement) return false;
+        focusElement.removeEventListener('click',this.cbclickForFocusElement);
+        focusElement.removeEventListener('keypress',this.cbkeypressForFocusElement);
+    }
+    cbclickForFocusElement = (event)=>{ return this.onclickForFocusElement(event); }
+    onclickForFocusElement(event){
+        console.log('onclickForFocusElement');
+    }
+    cbkeypressForFocusElement = (event)=>{ return this.onkeypressForFocusElement(event); }    
+    onkeypressForFocusElement(event){
+        console.log('onkeypressForFocusElement');
+    }
+
+
+
 
     toPreviousSibling(el,target=null){
         if(!el){ console.warn('대상 element가 없습니다.'); return false; }
@@ -158,12 +204,22 @@ class DocumentBuilder{
         parent.append(el);
     }
 
+    /**
+     * Document.execCommand() 를 사용한다. Deprecated 상태지만 대체기능이 없다.
+     * @param {*} aCommandName 
+     * @param {*} aShowDefaultUI 
+     * @param {*} aValueArgument 
+     */
+    execCommand(commandId, showUI=false, value=null){
+        if(!this.focusElement) return false;
+        return document.execCommand(commandId,showUI,value)
+    }
     removeFocusElement(){
         if(!this.focusElement) return false;
         let next = this.focusElement.nextElementSibling??this.focusElement.previousElementSibling??this.focusElement.parentElement;
         if(!next || !next.dataset.type){ return false; }
         this.focusElement.remove();
-        this.setFocus(next);
+        this.focus(next);
     }
     styleFocusElement(k,v){
         if(!this.focusElement) return false;
