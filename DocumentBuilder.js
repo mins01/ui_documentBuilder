@@ -64,6 +64,19 @@ class DocumentBuilder{
     get focusElement(){
         return this.builderContainer.querySelector('*[data-focus]');
     }
+    set focusElement(target){
+        target.dataset.focus="";
+        this.syncFocusElement();
+    }
+    syncFocusElement(){
+        // const focusElement = this.focusElement
+        // document.querySelectorAll('*[data-sync-value]').forEach((el)=>{
+        //     let syncValue = el.dataset.syncValue;
+        //     let r = eval(syncValue)
+        //     console.log(r);
+        //     el.value = r;
+        // })
+    }
     get doc(){
         return this.builderContainer.querySelector('.doc');
     }
@@ -86,7 +99,7 @@ class DocumentBuilder{
         delete this.appContainer.dataset.focusStatus
     }
     
-    focus(el){
+    focus(el,force=false){
         if(!el){return false;}
         
         const target = el.closest('*[data-type]');
@@ -97,8 +110,7 @@ class DocumentBuilder{
         }else{
             this.blur()
         }
-
-        target.dataset.focus="";
+        this.focusElement = target;
 
         this.addEventListenerForfocusElement(target);
         if(target.dataset.type) this.appContainer.dataset.focusType = target.dataset.type;
@@ -300,6 +312,10 @@ class DocumentBuilder{
     styleFocusElement(k,v){
         if(!this.focusElement) return false;
         this.focusElement.style[k]=v;
+    }
+    clearStyleFocusElement(k){
+        if(!this.focusElement) return false;
+        this.focusElement.style[k]=null;
     }
     toggleStyleFocusElement(k,v){
         if(!this.focusElement) return false;

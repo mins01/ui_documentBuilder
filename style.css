@@ -228,19 +228,20 @@
     content: none;
 } */
 /* quotes */ 
-.builder-containr .doc *[data-type="layout"]{--el-name:"LAYOUT: "attr(data-layout)}
-.builder-containr .doc h1[data-type="block"]{--el-name:"BLOCK: <h1>"}
-.builder-containr .doc h2[data-type="block"]{--el-name:"BLOCK: <h2>"}
-.builder-containr .doc h3[data-type="block"]{--el-name:"BLOCK: <h3>"}
-.builder-containr .doc h4[data-type="block"]{--el-name:"BLOCK: <h4>"}
-.builder-containr .doc h5[data-type="block"]{--el-name:"BLOCK: <h5>"}
-.builder-containr .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>"}
-.builder-containr .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>"}
-.builder-containr .doc p[data-type="block"]{--el-name:"BLOCK: <p>"}
-.builder-containr .doc div[data-type="block"]{--el-name:"BLOCK: <div>"}
-.builder-containr .doc span[data-type="inline"]{--el-name:"<span>"}
-.builder-containr .doc button[data-type="inline"]{--el-name:"<button>"}
-.builder-containr .doc button[data-type="block"]{--el-name:"BLOCK: <button>"}
+.builder-containr .doc *[data-type="layout"]{--el-name:"LAYOUT: " attr(data-layout) attr(data-status)}
+.builder-containr .doc h1[data-type="block"]{--el-name:"BLOCK: <h1>" attr(data-status)}
+.builder-containr .doc h2[data-type="block"]{--el-name:"BLOCK: <h2>" attr(data-status)}
+.builder-containr .doc h3[data-type="block"]{--el-name:"BLOCK: <h3>" attr(data-status)}
+.builder-containr .doc h4[data-type="block"]{--el-name:"BLOCK: <h4>" attr(data-status)}
+.builder-containr .doc h5[data-type="block"]{--el-name:"BLOCK: <h5>" attr(data-status)}
+.builder-containr .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-status)}
+.builder-containr .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-status)}
+.builder-containr .doc p[data-type="block"]{--el-name:"BLOCK: <p>" attr(data-status)}
+.builder-containr .doc div[data-type="block"]{--el-name:"BLOCK: <div>" attr(data-status)}
+.builder-containr .doc span[data-type="inline"]{--el-name:"<span>" attr(data-status)}
+.builder-containr .doc button[data-type="inline"]{--el-name:"<button>" attr(data-status)}
+.builder-containr .doc button[data-type="block"]{--el-name:"BLOCK: <button>" attr(data-status)}
+.builder-containr .doc a[data-type="block"]{--el-name:"A: <button>" attr(data-status)}
 
 
 
