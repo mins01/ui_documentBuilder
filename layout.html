@@ -40,6 +40,8 @@
     <script src="../ui_layerForElement/LayerForElement.js"></script>
     <link rel="stylesheet" href="../ui_layerForElement/lfe.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="data-focus.css">
+    <link rel="stylesheet" href="data-shape.css">
 
     <script src="DocumentBuilder.js"></script>
     <script>
@@ -61,7 +63,7 @@
         })
     </script>
 </head>
-<body  class="app-layout edit-mode">
+<body  class="app-layout app-docb edit-mode">
     <div class="min-vh-100 d-flex flex-column">
         <div class="bg-light">
             <nav class="navbar navbar-expand-sm navbar-light bg-light" >
@@ -148,14 +150,17 @@
                                     <li class="w-100">
                                         <div class="nav-link px-0">FRAME</div>
                                         <ul class="nav ms-3  d-flex flex-row gap-3">
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout',layout:'normal'})"> NORMAL </button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout',layout:'flex'})"> FLEX - ROW</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout',layout:'flex-column'})"> FLEX - COLUMN</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout',layout:'grid-2'})"> GRID - 2 x N</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout',layout:'grid-3'})"> GRID - 3 x N</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout',layout:'grid-4'})"> GRID - 4 x N</button></li>
-                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout',layout:'col'})"> COL</button></li>
-
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'normal'})"> NORMAL </button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex'})"> FLEX - ROW</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex-2'})"> FLEX - ROW - 2</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex-3'})"> FLEX - ROW - 3 </button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex-4'})"> FLEX - ROW - 4</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex-5'})"> FLEX - ROW - 5</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex-column'})"> FLEX - COLUMN</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid-2'})"> GRID - 2 x N</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid-3'})"> GRID - 3 x N</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid-4'})"> GRID - 4 x N</button></li>
+                                            <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'col'})"> COL</button></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -218,9 +223,9 @@
                 <div id="workplace" class="col">
                     <div class="builder-containr" id="docb-container">
                         <div class="doc">
-                            <div class="page" data-type="layout">
-                                <div data-type="layout" data-layout="normal" rule>
-                                    <h1 data-type="block" >head - 1</h1>
+                            <div class="page" data-type="layout" data-layout="page" data-status="fixed">
+                                <div data-type="layout" data-layout="normal">
+                                    <h1 data-type="block" data-status="fixed">head - 1 - fixed</h1>
                                     <h2 data-type="block" >head - 2</h2>
                                     <h3 data-type="block" ></h3>
                                     <p data-type="block" >asd</p>
@@ -246,6 +251,12 @@
                                     </p>
                                     <button data-type="block"></button>
                                 </div>
+                                <div  data-type="layout" data-layout="normal">
+                                    <div data-type="block">
+                                        <button data-type="block" data-status="fixed" data-shape="btn-big-red">확인</button>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         
@@ -257,6 +268,8 @@
                     <button type="button" class="btn btn-primary btn-sm m-1" onclick="console.log(docb.toHtml())" >toHtml</button>
                     <button type="button" class="btn btn-primary btn-sm m-1" onclick="lfe.toggle()" >lfe.toggle()</button>
                     <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.editMode = !docb.editMode" >edit/preview</button>
+                    <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.clear()" >clear</button>
+                    <button type="button" class="btn btn-primary btn-sm m-1" onclick='docb.clearAndInitFromHtml(`<div data-type="layout" layout="normal"><h1 data-type="block">제목 부분</h1></div><div data-type="layout" layout="normal"><p data-type="block" data-focus="" >내용부분</p></div>`)' >clearAndInit</button>
                     
                 </div>
             </div>
@@ -268,11 +281,9 @@
         <div class="lfe-wrap lfe-wrap-motion-fade" id="lfe-wrap-1" data-lfe-pos="0">
             <div class="lfe-pos">
                 <div class="lfe-layer" >
-                    <div class="m-1">
-                        <div class="btn-group btn-group-sm" role="group">
+                    <form action="" class="m-1" onsubmit="return false;" onmousedown="return false;">
+                        <div class="btn-group btn-group-sm vis-focus-type hide-focus-type-inline hide-focus-status-fixed" role="group">
                             <button type="button" class="btn btn-primary" onpointerdown="docb.startEventMoveToAsPointerEvent()"><i class="bi bi-arrows-move"></i></button>
-                        </div>
-                        <div class="btn-group btn-group-sm" role="group">
                             <button type="button" class="btn btn-primary" onmousedown="docb.toPreviousSibling(docb.focusElement);return false;">이전</button>
                             <button type="button" class="btn btn-primary" onmousedown="docb.toNextSibling(docb.focusElement);return false;">다음</button>
                             
@@ -282,16 +293,18 @@
                             <button type="button" class="btn btn-success" onmousedown="docb.toggleStyleFocusElement('fontWeight','bold');return false;"><i class="bi bi-type-bold"></i></button>
                             <button type="button" class="btn btn-success" onmousedown="docb.toggleStyleFocusElement('fontStyle','italic');return false;"><i class="bi bi-type-italic"></i></button>
                         </div> -->
-                        <div class="btn-group btn-group-sm" role="group">
-                            <button type="button" class="btn btn-success" onmousedown="docb.execCommand('bold');return false;"><i class="bi bi-type-bold"></i></button>
+                        <div class="btn-group btn-group-sm  vis-focus-type hide-focus-type-layout hide-focus-type-inline" role="group">
+                            <button type="button" class="btn btn-success" onmousedown="docb.execCommand('bold');"><i class="bi bi-type-bold"></i></button>
                             <button type="button" class="btn btn-success" onmousedown="docb.execCommand('italic');return false;"><i class="bi bi-type-italic"></i></button>
-                            <button type="button" class="btn btn-success" onmousedown="docb.execCommand('removeFormat');return false;"><i class="bi bi-eraser"></i></button>
+                            <button type="button" class="btn btn-success" onmousedown="docb.execCommand('justifyLeft');return false;"><i class="bi bi-text-left"></i></button>
+                            <button type="button" class="btn btn-success" onmousedown="docb.execCommand('justifyCenter');return false;"><i class="bi bi-text-center"></i></button>
+                            <button type="button" class="btn btn-success" onmousedown="docb.execCommand('justifyRight');return false;"><i class="bi bi-text-right"></i></button>
+                            <button type="button" class="btn btn-warning" onmousedown="docb.execCommand('selectAll');docb.execCommand('removeFormat');return false;"><i class="bi bi-eraser"></i></button>
                         </div>
-                        <div class="btn-group btn-group-sm" role="group">
+                        <div class="btn-group btn-group-sm  vis-focus-type hide-focus-type-block hide-focus-type-inline" role="group">
                             <button type="button" class="btn btn-success" onmousedown="docb.toggleStyleFocusElement('textAlign','left');return false;"><i class="bi bi-text-left"></i></button>
                             <button type="button" class="btn btn-success" onmousedown="docb.toggleStyleFocusElement('textAlign','center');return false;"><i class="bi bi-text-center"></i></button>
                             <button type="button" class="btn btn-success" onmousedown="docb.toggleStyleFocusElement('textAlign','right');return false;"><i class="bi bi-text-right"></i></button>
-                            <!-- <button type="button" class="btn btn-secondary" onmousedown="docb.styleFocusElement('textAlign',null);return false;"><i class="bi bi-x-circle"></i></button> -->
                         </div>
 
                         <!-- <div class="btn-group btn-group-sm" role="group">
@@ -299,13 +312,13 @@
                         </div> -->
                         
                         
-                        <div class="btn-group btn-group-sm" role="group">
+                        <div class="btn-group btn-group-sm vis-focus-type show-focus-type-all " role="group">
                             <button type="button" class="btn btn-danger" onclick="docb.removeFocusElement();"><i class="bi bi-trash"></i></button>
                         </div>
                         <!-- <div class="btn-group btn-group-sm" role="group">
                             <button type="button" class="btn btn-danger" onclick="LayerForElement.hideFromElement(this)">X</button>
                         </div> -->
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

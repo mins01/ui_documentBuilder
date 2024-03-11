@@ -1,8 +1,17 @@
 class DocumentBuilder{
+    builderContainer = null;
+    appContainer = null;
+    lfe = null;
+    doc = null;
+    page = null;
+    lastFocusElement = null;
     constructor(builderContainer,lfe,appContainer){
         this.builderContainer = builderContainer;
         this.appContainer = appContainer
         this.lfe = lfe
+        this.doc = this.builderContainer.querySelector('.doc')
+        this.page = this.builderContainer.querySelector('.page')
+        this.lastFocusElement = null;
     }
     get editMode(){
         return this.appContainer.classList.contains('edit-mode');
@@ -13,6 +22,12 @@ class DocumentBuilder{
     set editMode(b){
         b?this.appContainer.classList.add('edit-mode'):this.appContainer.classList.remove('edit-mode')
         this.blur();
+    }
+    set docWidth(width='auto'){
+        this.doc.style.width = width;
+    }
+    get docWidth(){
+        return this.doc.style.width??'auto';
     }
     addEventListener(){
         this.builderContainer.addEventListener('click',this.cbclick);
@@ -30,7 +45,6 @@ class DocumentBuilder{
         // event.stopPropagation();
         // event.preventDefault();
         if(event.target != this.focusElement){
-            this.blur()
             this.focus(event.target)
         }
     }
@@ -66,7 +80,10 @@ class DocumentBuilder{
                 target.removeAttribute('contentEditable');
             }
         }
+        this.lastFocusElement = null;
         this.lfe.hide()
+        delete this.appContainer.dataset.focusType
+        delete this.appContainer.dataset.focusStatus
     }
     
     focus(el){
@@ -75,8 +92,18 @@ class DocumentBuilder{
         const target = el.closest('*[data-type]');
         if(!target){return false;}
         
+        if(this.lastFocusElement == target){
+            return false;
+        }else{
+            this.blur()
+        }
+
         target.dataset.focus="";
+
         this.addEventListenerForfocusElement(target);
+        if(target.dataset.type) this.appContainer.dataset.focusType = target.dataset.type;
+        if(target.dataset.status) this.appContainer.dataset.focusStatus = target.dataset.status;
+
         if(target.dataset.type=='block' || target.dataset.type=='inline'){
             target.contentEditable = true
             target.focus();
@@ -91,8 +118,28 @@ class DocumentBuilder{
             }
         }
         this.lfe.show(target)
+        this.lastFocusElement = this.focusElement;
         return true;
     }
+
+    clear(){
+        this.blur();
+        this.page.innerHTML = '';
+    }
+    clearAndInitFromHtml(html){
+        this.clear();
+        const elements = this.fromHtml(html);
+        [...elements].forEach(element => {
+            this.append(this.page,element); 
+        });
+        this.blur();
+        setTimeout(()=>{
+            this.focus(this.page.querySelector('*[data-type="block"]'));
+        },100)
+        
+    }
+    
+
     addEventListenerForfocusElement(focusElement){
         if(!focusElement) return false;
         focusElement.addEventListener('click',this.cbclickForFocusElement);
@@ -110,6 +157,35 @@ class DocumentBuilder{
     cbkeypressForFocusElement = (event)=>{ return this.onkeypressForFocusElement(event); }    
     onkeypressForFocusElement(event){
         console.log('onkeypressForFocusElement');
+        // console.log(event);
+        if(event.target.tagName=='BUTTON'){
+            // event.stopPropagation();
+            if(event.code == 'Space'){
+                event.preventDefault();
+                document.execCommand('insertText',null,' ');
+            }else if(event.code == 'Enter'){
+                event.preventDefault();
+                document.execCommand('insertText',null,'\n');
+            }
+        }
+    }
+    // https://stackoverflow.com/questions/494143/creating-a-new-dom-element-from-an-html-string-using-built-in-dom-methods-or-pro/35385518#35385518
+    /**
+     * @param {String} HTML representing a single element.
+     * @param {Boolean} flag representing whether or not to trim input whitespace, defaults to true.
+     * @return {Element | HTMLCollection | null}
+     */
+    fromHtml(html, trim = true){
+        // Process the HTML string.
+        html = trim ? html.trim() : html;
+        if (!html) return null;
+    
+        // Then set up a new template element.
+        const template = document.createElement('template');
+        template.innerHTML = html;
+        const result = template.content.children;
+    
+        return result;
     }
 
 
@@ -118,7 +194,7 @@ class DocumentBuilder{
     toPreviousSibling(el,target=null){
         if(!el){ console.warn('대상 element가 없습니다.'); return false; }
         if(!target){
-            if(el.parentElement.dataset.type!='layout' || el.parentElement.dataset.type!='block'){ console.warn('부모가 data-type="layout" || data-type="block" 이 아닙니다.'); return false; }
+            if(!(el.parentElement.dataset.type=='layout' || el.parentElement.dataset.type=='block')){ console.warn('부모가 data-type="layout" or data-type="block" 이 아닙니다.'); return false; }
             if(!el.previousElementSibling){ console.warn('이전 이웃이 없습니다.'); return false; }
             target = el.previousElementSibling;
         }
@@ -128,7 +204,7 @@ class DocumentBuilder{
     toNextSibling(el,target=null){
         if(!el){ console.warn('대상 element가 없습니다.'); return false; }
         if(!target){
-            if(el.parentElement.dataset.type!='layout' || el.parentElement.dataset.type!='block'){ console.warn('부모가 data-type="layout" || data-type="block" 이 아닙니다.'); return false; }
+            if(!(el.parentElement.dataset.type=='layout' || el.parentElement.dataset.type=='block')){ console.warn('부모가 data-type="layout" or data-type="block" 이 아닙니다.'); return false; }
             if(!el.nextElementSibling){ console.warn('다음 이웃이 없습니다.'); return false; }
             target = el.nextElementSibling;
         }
@@ -237,6 +313,12 @@ class DocumentBuilder{
 
     toHtml(){
         return this.doc.outerHTML.replace(/contenteditable="true"/g,'');
+    }
+    toHtmlFromPage(){
+        return this.page.outerHTML.replace(/contenteditable="true"/g,'');
+    }
+    toHtmlFromPageInnerHtml(){
+        return this.page.innerHTML.replace(/contenteditable="true"/g,'');
     }
 
 }

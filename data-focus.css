@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+/* lfe 제어*/
+.vis-focus-type{
+    /* display: none; */
+}
+.app-docb[data-focus-type="block"] .hide-focus-type-block ,
+.app-docb[data-focus-type="layout"] .hide-focus-type-layout ,
+.app-docb[data-focus-type] .hide-focus-type-all{
+    display: none;
+}
+.app-docb[data-focus-status~="fixed"] .hide-focus-status-fixed{
+    display: none;
+}

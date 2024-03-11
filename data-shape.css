@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+
+
+.doc *[data-shape="btn-big-red"]{
+    font-size: 2em;
+    border-width: 0px;
+    border-radius: 100vmax;
+    background-color: brown;
+    color: #fff;
+    font-weight: bold;
+    display: block;
+    margin:0;
+    max-width: 300px;
+    min-width: 200px;
+}

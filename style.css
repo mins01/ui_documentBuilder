@@ -18,6 +18,10 @@
     outline: 3px dashed #999;
     outline-offset: -3px;
 }
+.builder-containr *{
+    padding:initial;
+    margin:initial;
+}
 .builder-containr .doc{
     margin:var(--s-20);
     /* outline: 2px dashed #999; */
@@ -43,8 +47,13 @@
     min-height: 1.5em;
     min-width: 1.5em
 }
-.doc *[data-type]:not([data-type="inline"]){
+.doc *[data-type=layout]{
     margin:var(--s-5);
+    padding:var(--s-10);
+}
+.doc *[data-type="block"]{
+    /* margin:var(--s-5); */
+    margin:0;
     padding:var(--s-5);
 }
 
@@ -171,31 +180,37 @@
 
 
 /* 레이아웃 설정부 */
-.doc *[data-type="layout"][data-layout="flex"]{
+.doc *[data-type="layout"][data-layout^="flex"]{
     display: flex;
     flex-wrap: wrap;
 }
-.doc *[data-type="layout"][data-layout="flex"] > *{
-    flex: 1 1 auto;;
-}
-
-.doc *[data-type="layout"][data-layout="flex-column"]{
-    display: flex;
+.doc *[data-type="layout"][data-layout^="flex-column"]{
     flex-direction: column;
 }
-.doc *[data-type="layout"][data-layout="flex-column"] > *{
-    flex: 1 1 auto;;
+.doc *[data-type="layout"][data-layout^="flex"] > *{
+    flex: 1 1 auto;
+}
+.doc *[data-type="layout"][data-layout^="flex-2"] > *{
+    flex: 1 0 50%;
+}
+.doc *[data-type="layout"][data-layout^="flex-3"] > *{
+    flex: 1 0 33.33%;
+}
+.doc *[data-type="layout"][data-layout^="flex-4"] > *{
+    flex: 1 0 25%;
+}
+
+
+.doc *[data-type="layout"][data-layout^="grid"]{
+    display: grid;
 }
 .doc *[data-type="layout"][data-layout="grid-2"]{
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
 .doc *[data-type="layout"][data-layout="grid-3"]{
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
 .doc *[data-type="layout"][data-layout="grid-4"]{
-    display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
 
