@@ -5,13 +5,43 @@ class DocumentBuilder{
     doc = null;
     page = null;
     lastFocusElement = null;
+    shadow = null;
     constructor(builderContainer,lfe,appContainer){
         this.builderContainer = builderContainer;
         this.appContainer = appContainer
         this.lfe = lfe
-        this.doc = this.builderContainer.querySelector('.doc')
-        this.page = this.builderContainer.querySelector('.page')
+        
         this.lastFocusElement = null;
+
+
+        let builder_innerHTML = this.builderContainer.querySelector('.builder').innerHTML
+
+
+
+        this.shadowRoot = this.builderContainer.attachShadow({ mode: "open" });
+
+        if(document.querySelector('#template_head')){
+            [...document.querySelector('#template_head').content.children].forEach((el)=>{
+                this.shadowRoot.append(el);
+            })    
+        }
+        [...this.builderContainer.children].forEach((el)=>{
+            console.log(el)
+            this.shadowRoot.append(el);
+        })
+
+        // this.builder = document.createElement('div');
+        // this.builder.classList.add('builder');
+        // console.log(this.builder);
+        // this.shadowRoot.append(this.builder);
+        
+        // this.builder.innerHTML = builder_innerHTML
+        this.builder = this.shadowRoot.querySelector('.builder')
+        this.doc = this.builder.querySelector('.doc')
+        this.page = this.builder.querySelector('.page')
+
+
+
     }
     get editMode(){
         return this.appContainer.classList.contains('edit-mode');
@@ -21,6 +51,8 @@ class DocumentBuilder{
      */
     set editMode(b){
         b?this.appContainer.classList.add('edit-mode'):this.appContainer.classList.remove('edit-mode')
+        b?this.builder.classList.add('edit-mode'):this.builder.classList.remove('edit-mode')
+        // this.page.contentEditable=b;
         this.blur();
     }
     set docWidth(width='auto'){
@@ -30,12 +62,12 @@ class DocumentBuilder{
         return this.doc.style.width??'auto';
     }
     addEventListener(){
-        this.builderContainer.addEventListener('click',this.cbclick);
+        this.builder.addEventListener('click',this.cbclick);
         // this.builderContainer.addEventListener('keypress',this.cbkeypress);
         // this.builderContainer.addEventListener('keydown',this.cbkeydown);
     }
     removeEventListener(){
-        this.builderContainer.removeEventListener('click',this.cbclick);
+        this.builder.removeEventListener('click',this.cbclick);
         // this.builderContainer.removeEventListener('keypress',this.cbkeypress);
         // this.builderContainer.removeEventListener('keydown',this.cbkeydown);
     }
@@ -62,7 +94,7 @@ class DocumentBuilder{
         // event.preventDefault();
     }
     get focusElement(){
-        return this.builderContainer.querySelector('*[data-focus]');
+        return this.builder.querySelector('*[data-focus]');
     }
     set focusElement(target){
         target.dataset.focus="";
@@ -78,7 +110,7 @@ class DocumentBuilder{
         // })
     }
     get doc(){
-        return this.builderContainer.querySelector('.doc');
+        return this.builder.querySelector('.doc');
     }
 
     blur(target = null){
@@ -97,6 +129,7 @@ class DocumentBuilder{
         this.lfe.hide()
         delete this.appContainer.dataset.focusType
         delete this.appContainer.dataset.focusStatus
+        delete this.appContainer.dataset.focusNodeName
     }
     
     focus(el,force=false){
@@ -115,10 +148,12 @@ class DocumentBuilder{
         this.addEventListenerForfocusElement(target);
         if(target.dataset.type) this.appContainer.dataset.focusType = target.dataset.type;
         if(target.dataset.status) this.appContainer.dataset.focusStatus = target.dataset.status;
+        if(target.nodeName ) this.appContainer.dataset.focusNodeName = target.nodeName ;
+        console.log(this.appContainer.dataset);
 
         if(target.dataset.status && target.dataset.status?.indexOf('readonly')!==-1){
 
-        }else if(target.dataset.type=='block' || target.dataset.type=='inline'){
+        }else if(target.dataset.type=='block' || target.dataset.type=="content"){
         
             target.contentEditable = true
             target.focus();
@@ -227,15 +262,18 @@ class DocumentBuilder{
         this.lfe.syncPos();
     }
     startEventMoveToAsPointerEvent(){
-        document.addEventListener('pointermove',this.moveToAsPointerEvent);
-        document.addEventListener('pointerup',(event)=>{
-            document.removeEventListener('pointermove',this.moveToAsPointerEvent)
+        this.appContainer.dataset.focusMoving="true"
+        this.shadowRoot.addEventListener('pointermove',this.moveToAsPointerEvent);
+        this.shadowRoot.addEventListener('pointerup',(event)=>{
+            delete this.appContainer.dataset.focusMoving;
+            this.shadowRoot.removeEventListener('pointermove',this.moveToAsPointerEvent)
         },{once:true});
     }
     moveToAsPointerEvent = (event)=>{
         // console.log(event.x,event.y);
         const focusElement = this.focusElement;
-        let toEl = document.elementFromPoint(event.x,event.y);
+        let toEl = this.shadowRoot.elementFromPoint(event.x,event.y);
+        console.log(toEl);
         if(!focusElement || !toEl || focusElement===toEl || focusElement.contains(toEl) || toEl.classList.contains('page') || focusElement.classList.contains('page')){
             // 동작하면 안되는 조건
 
@@ -300,7 +338,6 @@ class DocumentBuilder{
     append(parent,el){
         parent.append(el);
     }
-
     /**
      * Document.execCommand() 를 사용한다. Deprecated 상태지만 대체기능이 없다.
      * @param {*} aCommandName 
@@ -309,13 +346,18 @@ class DocumentBuilder{
      */
     execCommand(commandId, showUI=false, value=null){
         if(!this.focusElement) return false;
+        if(commandId=='insertElement'){
+            commandId = 'insertHTML';
+            console.log(value);
+            value = value.outerHTML;
+        }
         return document.execCommand(commandId,showUI,value)
     }
     removeFocusElement(){
         if(!this.focusElement) return false;
         let next = this.focusElement.nextElementSibling??this.focusElement.previousElementSibling??this.focusElement.parentElement;
-        if(!next || !next.dataset.type){ return false; }
         this.focusElement.remove();
+        if(!next || !next.dataset.type){ return false; }
         this.focus(next);
     }
     styleFocusElement(k,v){

@@ -1,13 +1,37 @@
 @charset "utf-8";
 
 /* lfe 제어*/
+.lfe-container{
+    z-index: 20;
+}
 .vis-focus-type{
     /* display: none; */
 }
-.app-docb[data-focus-type="block"] .hide-focus-type-block ,
-.app-docb[data-focus-type="layout"] .hide-focus-type-layout ,
-.app-docb[data-focus-type] .hide-focus-type-all,
-.app-docb[data-focus-status~="readonly"] .hide-focus-status-readonly,
-.app-docb[data-focus-status~="fixed"] .hide-focus-status-fixed{
+.app-docb[data-focus-type="block"] *[hide-focus-type~="block"] ,
+.app-docb[data-focus-type="layout"] *[hide-focus-type~="layout"] ,
+.app-docb[data-focus-type="content"] *[hide-focus-type~="content"] ,
+.app-docb[data-focus-type] *[hide-focus-type~="all"],
+.app-docb[data-focus-status~="readonly"] *[hide-focus-status~="readonly"],
+.app-docb[data-focus-status~="fixed"] *[hide-focus-status~="fixed"]{
     display: none;
+}
+
+
+
+*[show-focus-type],
+*[show-focus-status]{
+    display: none !important;
+}
+.app-docb[data-focus-type="block"] *[show-focus-type~="block"] ,
+.app-docb[data-focus-type="layout"] *[show-focus-type~="layout"] ,
+.app-docb[data-focus-type="content"] *[show-focus-type~="content"] ,
+.app-docb[data-focus-type] *[show-focus-type~="all"],
+.app-docb[data-focus-status~="readonly"] *[show-focus-status~="readonly"],
+.app-docb[data-focus-status~="fixed"] *[show-focus-status~="fixed"]{
+    display: inherit !important;
+}
+
+
+.app-docb[data-focus-moving="true"]  *[hide-focus-moving]{
+    display: none !important;
 }

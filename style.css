@@ -1,28 +1,30 @@
 @charset "utf-8";
 
 .app-layout{
-    --navbar-height:56px;
+    /* --navbar-height:56px; */
+    --navbar-height:0px;
 }
 
-.builder-containr{
+.builder{
     --s-5:5px;
     --s-10:10px;
     --s-20:20px;
     --s-30:30px;
     --s-40:40px;
+    --s-50:50px;
     --font-size:20px;
     --el-name:"UNKONWN";
 
-    padding:var(--s-10);
+    padding:var(--s-50) var(--s-10);
     margin:var(--s-10);
     outline: 3px dashed #999;
     outline-offset: -3px;
 }
-.builder-containr *{
+.builder *{
     padding:initial;
     margin:initial;
 }
-.builder-containr .doc{
+.builder .doc{
     margin:var(--s-20);
     /* outline: 2px dashed #999; */
     outline-offset: -2px;
@@ -30,7 +32,8 @@
 .page{
     margin:var(--s-20);
     padding:var(--s-20);
-    font-size: var(--font-size);
+    /* font-size: var(--font-size); */
+    font-size: 20px;
     box-shadow: 0px 0px 5px #00000099;
 }
 .doc h1{font-size: 2.5em;quotes:"h1" "<h1>"}
@@ -63,20 +66,20 @@
 .doc *[data-type="block"]{
     display: block;
 }
-.doc *[data-type="inline"]{
+.doc *[data-type="content"]{
     display: inline-block;
 }
 
 
 /* element dashed box */
-.edit-mode .doc *[data-type]::before {
+.edit-mode .doc *[data-type]::before{
     content: var(--el-name);
     color:#00000033;
     display: block;
 
     font-size: 12px;
     line-height: 1em;
-    padding:0.25em;
+    padding:0.25em 0.5em;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -88,70 +91,34 @@
     background-color: #99999933;
     z-index: 1;
 }
-.edit-mode .doc *[data-type]::after {
-    
-    content: "";
-    color:#00000033;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: flex-start;
-    align-items: flex-start;
-
-    position: absolute;
-
-    top:0;left:0;
-    height: 100%;
-    width:100%;
-    /* background-color: #aabbcc99; */
-    border:1px solid #aabbcc33;
-    pointer-events: none;
+.edit-mode .doc *[data-type]{
+    outline: 1px solid #66666666;
+}
+.edit-mode .doc *[data-type="layout"]{
+    outline: 4px dashed #33333333;
+    outline-offset: -4px;
+}
+.edit-mode .doc *[data-type="block"]{
+    outline: 2px dashed #00660033;
+    outline-offset: -2px;
+}
+.edit-mode .doc *[data-type="content"]{
+    outline: 2px dashed #00006633;
+    outline-offset: -2px;
+}
+.edit-mode .doc *[data-type][data-focus]{
+    animation: ani-layout-outline-color 0.4s steps(2, jump-start) 0s infinite alternate both;
 }
 
-.edit-mode .doc *[data-focus]{
-    outline: 1px dashed #006eff99;
-    outline:none;
-    caret-color: rgb(119, 15, 15);
+.edit-mode .doc *[data-type="layout"][data-focus]{
+    animation-name: ani-layout-outline-color;
 }
-.edit-mode .doc *[data-type]::after{
-    border-width:1px;
-    border-style: dashed;
+.edit-mode .doc *[data-type="block"][data-focus]{
+    animation-name: ani-block-outline-color;
 }
-.edit-mode .doc *[data-type][data-focus]::after{
-    border-width:1px 1px 1px 5px;
-    border-style: dashed dashed dashed solid;
-    animation: ani-border-color 0.4s steps(2, jump-start) 0s infinite alternate both;
+.edit-mode .doc *[data-type="content"][data-focus]{
+    animation-name: ani-content-outline-color;
 }
-.edit-mode .doc *[data-type="layout"]::after{
-    border-width:1px 1px 1px 5px;
-    border-style: dashed dashed dashed double;
-    border-color: #33333333;
-}
-.edit-mode .doc *[data-type="block"]::after{
-    border-color: #00660033;
-}
-.edit-mode .doc *[data-type="inline"]::after{
-    border-color: #00006633;
-}
-.edit-mode .doc *[data-type="layout"][data-focus]::after{
-    animation-name: ani-layout-border-color;
-}
-.edit-mode .doc *[data-type="block"][data-focus]::after{
-    animation-name: ani-block-border-color;
-}
-.edit-mode .doc *[data-type="inline"][data-focus]::after{
-    animation-name: ani-inline-border-color;
-}
-
-
-/* .doc *[data-type="layout"]:empty::after{
-    content: "LAYOUT";
-    color: #99999999;
-    white-space: nowrap;
-    display: block;
-    background-color: #99999911;
-} */
 
 .edit-mode .doc *[data-type="block"]:empty::after{
     content: "EMPTY";
@@ -165,58 +132,57 @@
     align-items: center;
 }
 
-@keyframes ani-layout-border-color {
-    0%{border-color: #333333aa;}
-    100%{border-color: #33333333;}
+@keyframes ani-layout-outline-color {
+    0%{outline-color: #333333ff;}
+    100%{outline-color: #33333333;}
 }
-@keyframes ani-block-border-color {
-    0%{border-color: #006600aa;}
-    100%{border-color: #00660033;}
+@keyframes ani-block-outline-color {
+    0%{outline-color: #006600ff;}
+    100%{outline-color: #00660033;}
 }
-@keyframes ani-inline-border-color {
-    0%{border-color: #000066aa;}
-    100%{border-color: #00006633;}
+@keyframes ani-content-outline-color {
+    0%{outline-color: #0066ffff;}
+    100%{outline-color: #0066ff33;}
 }
-
 
 /* 레이아웃 설정부 */
-.doc *[data-type="layout"][data-layout^="flex"]{
+.doc *[data-type="layout"][data-component~="flex"]{
     display: flex;
     flex-wrap: wrap;
 }
-.doc *[data-type="layout"][data-layout^="flex-column"]{
+.doc *[data-type="layout"][data-component~="flex-column"]{
     flex-direction: column;
 }
-.doc *[data-type="layout"][data-layout^="flex"] > *{
+.doc *[data-type="layout"][data-component~="flex"] > *{
     flex: 1 1 auto;
 }
-.doc *[data-type="layout"][data-layout^="flex-2"] > *{
+.doc *[data-type="layout"][data-component~="flex-2"] > *{
     flex: 1 0 50%;
 }
-.doc *[data-type="layout"][data-layout^="flex-3"] > *{
+.doc *[data-type="layout"][data-component~="flex-3"] > *{
     flex: 1 0 33.33%;
 }
-.doc *[data-type="layout"][data-layout^="flex-4"] > *{
+.doc *[data-type="layout"][data-component~="flex-4"] > *{
     flex: 1 0 25%;
 }
 
 
-.doc *[data-type="layout"][data-layout^="grid"]{
+.doc *[data-type="layout"][data-component~="grid"]{
     display: grid;
 }
-.doc *[data-type="layout"][data-layout="grid-2"]{
+.doc *[data-type="layout"][data-component~="grid-2"]{
     grid-template-columns: repeat(2, 1fr);
 }
-.doc *[data-type="layout"][data-layout="grid-3"]{
+.doc *[data-type="layout"][data-component~="grid-3"]{
     grid-template-columns: repeat(3, 1fr);
 }
-.doc *[data-type="layout"][data-layout="grid-4"]{
+.doc *[data-type="layout"][data-component~="grid-4"]{
     grid-template-columns: repeat(4, 1fr);
 }
 
 
 /* 태그별 전용 설정 */
-.builder-containr .doc button[data-type="block"]{
+.builder .doc button[data-type="block"]{
     display: block;
     margin-left: auto; margin-right: auto;
     width: 100%;
@@ -240,28 +206,28 @@
 }
 
 
-/* .builder-containr .doc button[data-type="block"]::before{
+/* .builder .doc button[data-type="block"]::before{
     content: none;
 }
-.builder-containr .doc button[data-type="block"]::after{
+.builder .doc button[data-type="block"]::after{
     content: none;
 } */
 /* quotes */ 
-.builder-containr .doc *[data-type="layout"]{--el-name:"LAYOUT: " attr(data-layout) attr(data-status)}
-.builder-containr .doc h1[data-type="block"]{--el-name:"BLOCK: <h1>" attr(data-status)}
-.builder-containr .doc h2[data-type="block"]{--el-name:"BLOCK: <h2>" attr(data-status)}
-.builder-containr .doc h3[data-type="block"]{--el-name:"BLOCK: <h3>" attr(data-status)}
-.builder-containr .doc h4[data-type="block"]{--el-name:"BLOCK: <h4>" attr(data-status)}
-.builder-containr .doc h5[data-type="block"]{--el-name:"BLOCK: <h5>" attr(data-status)}
-.builder-containr .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-status)}
-.builder-containr .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-status)}
-.builder-containr .doc p[data-type="block"]{--el-name:"BLOCK: <p>" attr(data-status)}
-.builder-containr .doc div[data-type="block"]{--el-name:"BLOCK: <div>" attr(data-status)}
-.builder-containr .doc figure[data-type="block"]{--el-name:"BLOCK: <figure>" attr(data-status)}
-.builder-containr .doc span[data-type="inline"]{--el-name:"<span>" attr(data-status)}
-.builder-containr .doc button[data-type="inline"]{--el-name:"<button>" attr(data-status)}
-.builder-containr .doc button[data-type="block"]{--el-name:"BLOCK: <button>" attr(data-status)}
-.builder-containr .doc a[data-type="block"]{--el-name:"A: <button>" attr(data-status)}
+.builder .doc *[data-type="layout"]{--el-name:"LAYOUT: " attr(data-component) attr(data-status)}
+.builder .doc h1[data-type="block"]{--el-name:"BLOCK: <h1>" attr(data-status)}
+.builder .doc h2[data-type="block"]{--el-name:"BLOCK: <h2>" attr(data-status)}
+.builder .doc h3[data-type="block"]{--el-name:"BLOCK: <h3>" attr(data-status)}
+.builder .doc h4[data-type="block"]{--el-name:"BLOCK: <h4>" attr(data-status)}
+.builder .doc h5[data-type="block"]{--el-name:"BLOCK: <h5>" attr(data-status)}
+.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-status)}
+.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-status)}
+.builder .doc p[data-type="block"]{--el-name:"BLOCK: <p>" attr(data-status)}
+.builder .doc div[data-type="block"]{--el-name:"BLOCK: <div>" attr(data-status)}
+.builder .doc figure[data-type="block"]{--el-name:"BLOCK: <figure>" attr(data-status)}
+.builder .doc span[data-type="content"]{--el-name:"<span>" attr(data-status)}
+.builder .doc button[data-type="content"]{--el-name:"<button>" attr(data-status)}
+.builder .doc button[data-type="block"]{--el-name:"BLOCK: <button>" attr(data-status)}
+.builder .doc a[data-type="content"]{--el-name:"A: <LINK>" attr(data-status)}
 
 
 
