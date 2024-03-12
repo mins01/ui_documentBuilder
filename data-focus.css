@@ -6,9 +6,8 @@
 }
 .app-docb[data-focus-type="block"] .hide-focus-type-block ,
 .app-docb[data-focus-type="layout"] .hide-focus-type-layout ,
-.app-docb[data-focus-type] .hide-focus-type-all{
-    display: none;
-}
+.app-docb[data-focus-type] .hide-focus-type-all,
+.app-docb[data-focus-status~="readonly"] .hide-focus-status-readonly,
 .app-docb[data-focus-status~="fixed"] .hide-focus-status-fixed{
     display: none;
 }

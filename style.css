@@ -57,9 +57,9 @@
     padding:var(--s-5);
 }
 
-.doc *[data-type="block"] *:not([data-type]){
+/* .doc *[data-type="block"] *:not([data-type]){
     font-size: inherit !important;
-}
+} */
 .doc *[data-type="block"]{
     display: block;
 }
@@ -221,6 +221,25 @@
     margin-left: auto; margin-right: auto;
     width: 100%;
 }
+.doc img{
+    max-width: 100%;
+    max-height: 100%;
+    padding:0 !important;
+    margin:0 !important;
+}
+.doc figure{
+    padding:0 !important;
+}
+.doc figure > img{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    width: 100%;
+    padding:0 !important;
+    margin:0 !important;
+}
+
+
 /* .builder-containr .doc button[data-type="block"]::before{
     content: none;
 }
@@ -238,6 +257,7 @@
 .builder-containr .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-status)}
 .builder-containr .doc p[data-type="block"]{--el-name:"BLOCK: <p>" attr(data-status)}
 .builder-containr .doc div[data-type="block"]{--el-name:"BLOCK: <div>" attr(data-status)}
+.builder-containr .doc figure[data-type="block"]{--el-name:"BLOCK: <figure>" attr(data-status)}
 .builder-containr .doc span[data-type="inline"]{--el-name:"<span>" attr(data-status)}
 .builder-containr .doc button[data-type="inline"]{--el-name:"<button>" attr(data-status)}
 .builder-containr .doc button[data-type="block"]{--el-name:"BLOCK: <button>" attr(data-status)}

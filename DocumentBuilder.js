@@ -116,7 +116,10 @@ class DocumentBuilder{
         if(target.dataset.type) this.appContainer.dataset.focusType = target.dataset.type;
         if(target.dataset.status) this.appContainer.dataset.focusStatus = target.dataset.status;
 
-        if(target.dataset.type=='block' || target.dataset.type=='inline'){
+        if(target.dataset.status && target.dataset.status?.indexOf('readonly')!==-1){
+
+        }else if(target.dataset.type=='block' || target.dataset.type=='inline'){
+        
             target.contentEditable = true
             target.focus();
             if(target.textContent.length == 0|| target.tagName=='BUTTON'){
@@ -263,28 +266,34 @@ class DocumentBuilder{
     //     else{ this.toPreviousSibling(target,toEl); }
     // }
     
-    appendWithCreateElementToFocusElement(tag,attributes = null, className = null, child = null){
+    appendWithCreateElementToFocusElement(tag,attributes = null, properties = null, children = null){
         const parent = this.focusElement;
         if(!parent) return;
-        const el = this.createElement(tag,attributes, className, child);
+        const el = this.createElement(tag,attributes, properties, children);
         this.append(parent,el);
     }
-    appendWithCreateElement(parent,tag,attributes = null, className = null, child = null){
-        const el = this.createElement(tag,attributes, className, child);
+    appendWithCreateElement(parent,tag,attributes = null, properties = null, children = null){
+        const el = this.createElement(tag,attributes, properties, children);
         this.append(parent,el);
     }
-    createElement(tag,attributes=null, className = null, child = null){
+    createElement(tag,attributes=null, properties = null, children = null){
         const el = document.createElement(tag);
         if(attributes){
             for(let k in attributes){
                 el.setAttribute(k,attributes[k]);
             }
         }
-        if(className) el.className = className
-        if(typeof child === "string"){
-            el.textContent = child
-        }else if(child){
-            el.append(child);
+        if(properties){
+            for(let k in properties){
+                el[k] = properties[k];
+            }
+        }
+        if(typeof children === "string"){
+            el.textContent = children
+        }else if(children){
+            children.forEach((child)=>{
+                el.append(child);
+            })
         } 
         return el;
     }
