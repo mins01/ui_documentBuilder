@@ -78,7 +78,7 @@
 .edit-mode .doc *[data-type]{
     outline: 1px solid #66666666;
 }
-.edit-mode .doc *[data-type="layout"]{
+.edit-mode .doc *[data-type="zone"]{
     outline: 4px dashed #33333333;
     outline-offset: -4px;
 }
@@ -91,11 +91,11 @@
     outline-offset: -2px;
 }
 .edit-mode .doc *[data-type][data-focus]{
-    animation: ani-layout-outline-color 0.4s steps(2, jump-start) 0s infinite alternate both;
+    animation: ani-zone-outline-color 0.4s steps(2, jump-start) 0s infinite alternate both;
 }
 
-.edit-mode .doc *[data-type="layout"][data-focus]{
-    animation-name: ani-layout-outline-color;
+.edit-mode .doc *[data-type="zone"][data-focus]{
+    animation-name: ani-zone-outline-color;
 }
 .edit-mode .doc *[data-type="block"][data-focus]{
     animation-name: ani-block-outline-color;
@@ -116,17 +116,17 @@
     align-items: center;
 }
 
-@keyframes ani-layout-outline-color {
+@keyframes ani-zone-outline-color {
     0%{outline-color: #333333ff;}
     100%{outline-color: #33333333;}
 }
 @keyframes ani-block-outline-color {
-    0%{outline-color: #006600ff;}
-    100%{outline-color: #00660033;}
+    0%{outline-color: #009900ff;}
+    100%{outline-color: #00990033;}
 }
 @keyframes ani-content-outline-color {
-    0%{outline-color: #0066ffff;}
-    100%{outline-color: #0066ff33;}
+    0%{outline-color: #0099ffff;}
+    100%{outline-color: #0099ff33;}
 }
 
 
@@ -142,21 +142,21 @@
     content: none;
 } */
 /* quotes */ 
-.builder .doc *[data-type="layout"]{--el-name:"LAYOUT: " attr(data-component) attr(data-status)}
-.builder .doc h1[data-type="block"]{--el-name:"BLOCK: <h1>" attr(data-status)}
-.builder .doc h2[data-type="block"]{--el-name:"BLOCK: <h2>" attr(data-status)}
-.builder .doc h3[data-type="block"]{--el-name:"BLOCK: <h3>" attr(data-status)}
-.builder .doc h4[data-type="block"]{--el-name:"BLOCK: <h4>" attr(data-status)}
-.builder .doc h5[data-type="block"]{--el-name:"BLOCK: <h5>" attr(data-status)}
-.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-status)}
-.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-status)}
-.builder .doc p[data-type="block"]{--el-name:"BLOCK: <p>" attr(data-status)}
-.builder .doc div[data-type="block"]{--el-name:"BLOCK: <div>" attr(data-status)}
-.builder .doc figure[data-type="block"]{--el-name:"BLOCK: <figure>" attr(data-status)}
-.builder .doc span[data-type="content"]{--el-name:"<span>" attr(data-status)}
-.builder .doc button[data-type="content"]{--el-name:"<button>" attr(data-status)}
-.builder .doc button[data-type="block"]{--el-name:"BLOCK: <button>" attr(data-status)}
-.builder .doc a[data-type="content"]{--el-name:"A: <LINK>" attr(data-status)}
+.builder .doc *[data-type="zone"]{--el-name:"ZONE: " attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc h1[data-type="block"]{--el-name:"BLOCK: <h1>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc h2[data-type="block"]{--el-name:"BLOCK: <h2>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc h3[data-type="block"]{--el-name:"BLOCK: <h3>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc h4[data-type="block"]{--el-name:"BLOCK: <h4>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc h5[data-type="block"]{--el-name:"BLOCK: <h5>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc p[data-type="block"]{--el-name:"BLOCK: <p>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc div[data-type="block"]{--el-name:"BLOCK: <div>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc figure[data-type="block"]{--el-name:"BLOCK: <figure>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc span[data-type="content"]{--el-name:"<span>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc button[data-type="content"]{--el-name:"<button>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc button[data-type="block"]{--el-name:"BLOCK: <button>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc a[data-type="content"]{--el-name:"A: <LINK>" attr(data-component) attr(data-layout) attr(data-status); }
 
 
 

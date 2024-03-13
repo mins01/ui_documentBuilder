@@ -10,6 +10,11 @@ let vappCreateApp = Vue.createApp({
         },
         styleColorToHex:(color)=>{
           return styleColorToHex(color);
+        },
+        refocus(){
+          if(docb.focusElement){
+            docb.focusElement.focus()
+          } 
         }
       }
     }

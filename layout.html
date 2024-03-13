@@ -39,23 +39,36 @@
     <!-- //meta og -->
     <script src="../ui_layerForElement/LayerForElement.js"></script>
     <link rel="stylesheet" href="../ui_layerForElement/lfe.css">
-    <link rel="stylesheet" href="app.css">
-    <link rel="stylesheet" href="doc.css">
-    <link rel="stylesheet" href="builder.css">
+    <!-- <link rel="stylesheet" href="doc.css"> -->
     <link rel="stylesheet" href="data-focus.css">
-    <link rel="stylesheet" href="data-shape.css">
+    <link rel="stylesheet" href="data-shape.css">  
+    <link rel="stylesheet" href="builder.css">
+    <link rel="stylesheet" href="builder-app.css">
+    <link rel="stylesheet" href="builder-lfe.css">
 
     <script src="helper.js"></script>
     <script src="DocumentBuilder.js"></script>
     <script src="vappCreateApp.js"></script>
     <script>
         window.addEventListener('load',(event)=>{
-            LayerForElement.autoSync()
-            globalThis.lfe = new LayerForElement(document.querySelector('#lfe-wrap-1'));
             
+
             globalThis.vapp = vappCreateApp.mount(document.querySelector('.app-layout'))
             // v=vappCreateApp.mount(document.querySelector('.app-layout'))
             // console.log(v);
+
+            LayerForElement.autoSync()
+            globalThis.lfe = new LayerForElement(document.querySelector('#lfe-wrap-1'));
+            // lfe.onshow = function(lfe){
+            //     console.log('onshow',lfe.isShow,this.wrap,this.target)
+            // }
+            // lfe.onhide = function(lfe){
+            //     console.log('onhide',lfe.isShow)
+            // }
+            // lfe.ontoggle = function(lfe){
+            //     console.log('ontoggle',lfe.isShow,this.wrap,this.target)
+            // }
+
 
             globalThis.docb = new DocumentBuilder(document.querySelector('#docb-container'),lfe,document.querySelector('.app-layout'),vapp)
             docb.addEventListener();
@@ -68,7 +81,7 @@
         })
     </script>
 </head>
-<body  >
+<body >
     <template id="template_head">
         <!-- <link rel="stylesheet" href="../ui_layerForElement/lfe.css"> -->
         <link rel="stylesheet" href="doc.css">
@@ -253,7 +266,7 @@
                         <div class="builder-container" id="docb-container">
                             <div class="builder">
                                 <div class="doc">
-                                    <div class="page" data-type="layout" data-layout="page" data-status="fixed" style="max-width: 600px; margin: 0px auto; width: 600px;" data-focus="">
+                                    <div class="page" data-type="zone" data-layout="page" data-status="fixed" style="max-width: 600px; margin: 0px auto; width: 600px;" data-focus="">
                                         <h1 data-type="block" style="background-color: rgb(107, 0, 0); color: rgb(255, 255, 255);  max-width:300px;width:300px; margin:0 auto;text-align: center;">
                                             <b>제목</b>
                                         </h1>
@@ -271,7 +284,7 @@
                                         </div>
                                             
                                             
-                                            <div data-type="layout" data-layout="grid grid-4"><div data-type="block">1</div><div data-type="block">2</div><div data-type="block">3</div><div data-type="block">4</div></div><div data-type="layout" data-layout="div">
+                                            <div data-type="zone" data-layout="grid grid-4"><div data-type="block">1</div><div data-type="block">2</div><div data-type="block">3</div><div data-type="block">4</div></div><div data-type="zone" data-layout="div">
                                                 <div data-type="block" style="text-align: center;">
                                                     <button data-type="content" style="background-color: rgb(49, 146, 47); color: rgb(255, 255, 255); max-width: 300px; width: 300px;">
                                                         <span style="background-color: rgb(41, 153, 59);">
@@ -321,7 +334,7 @@
                                 </div>
                             </div>
                             <h4>Style</h4>
-                            <div class="">
+                            <div class=""  v-if="!!focusElement" >
                                 
                                 <div class="btn-group btn-group-sm m-1" role="group">
                                     <button type="button" class="btn btn-success" :class="{ active: focusElement && focusElement?.style?.margin=='0px auto 0px 0px' }" onpointerdown="docb.toggleStyleFocusElement('margin','0px auto 0px 0px');return false;"><i class="bi bi-align-start"></i></button>
@@ -332,8 +345,11 @@
                                 <div class="btn-group btn-group-sm m-1  " role="group" hide-focus-moving>
                                     <div class="col btn btn-success p-0">
                                         <select class="form-select form-select-sm" style="width: 6em;" 
-                                            onchange="docb.styleFocusElement('maxWidth',this.value);docb.styleFocusElement('width',this.value);return false;" 
-                                            :value="focusElement?.style?.maxWidth??''"
+                                            xonchange="docb.styleFocusElement('maxWidth',this.value);docb.styleFocusElement('width',this.value);return false;" 
+                                            v-model="focusElement.style.maxWidth"
+                                            @change="focusElement.style.width = focusElement.style.maxWidth"
+                                            @blur="console.log('x');"
+                                            onfocus="return false;"
                                         >
                                             <option value="">#MAX-WIDTH#</option>
                                             <option value="">Default</option>
@@ -350,8 +366,7 @@
                                     </div>
                                     <div class="col btn btn-success p-0">
                                         <select class="form-select form-select-sm" style="width: 6em;" 
-                                            onchange="docb.styleFocusElement('minHeight',this.value);return false;" 
-                                            :value="focusElement?.style?.minHeight??''"
+                                            v-model="focusElement.style.minHeight"
                                         >
                                             <option value="">#MIN-HEIGHT#</option>
                                             <option value="">Default</option>
@@ -377,13 +392,66 @@
                                 </div>
                                 <hr class="my-1">
                                 <div class="btn-group btn-group-sm m-1" role="group">
+                                    <label class="btn btn-success p-0" ><input type="color" style="height: 1.8em;width:1.8em" 
+                                        onpointerdown="this.oninput()" oninput="docb.styleFocusElement('borderColor',this.value); console.log(this.value);  return false;"
+                                        :value="styleColorToHex(focusElement?.style?.borderColor??'#000000')"
+                                    ></label>
+                                    <button type="button" class="btn btn-success" onpointerdown="docb.clearStyleFocusElement('borderColor')" ><i class="bi bi-eraser"></i></button>
+                                    <div class="col btn btn-success p-0">
+                                        <select class="form-select form-select-sm px-1" style="width: 4em;" 
+                                            v-model="focusElement.style.borderStyle"
+                                        >
+                                            <option value="">#BORDER-STYLE#</option>
+                                            <option value="">Default</option>
+                                            <option value="solid">solid</option>
+                                            <option value="dotted">dotted</option>
+                                            <option value="dashed">dashed</option>
+                                            <option value="none">none</option>
+                                        </select>
+                                    </div>
+                                    <div class="col btn btn-success p-0">
+                                        <select class="form-select form-select-sm px-1" style="width: 4em;" 
+                                            v-model="focusElement.style.borderWidth"
+                                        >
+                                            <option value="">#BORDER-WIDTH#</option>
+                                            <option value="">Default</option>
+                                            <option value="5px">5px</option>
+                                            <option value="4px">4px</option>
+                                            <option value="3px">3px</option>
+                                            <option value="2px">2px</option>
+                                            <option value="1px">1px</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="btn-group btn-group-sm m-1" role="group">
+                                    <div class="col btn btn-success p-0">
+                                        <select class="form-select form-select-sm" style="width: 6em;"
+                                            v-model="focusElement.style.borderRadius"
+                                        >
+                                            <option value="">#BORDER-RADIUS#</option>
+                                            <option value="">Default</option>
+                                            <option value="999999px">pill</option>
+                                            <option value="20px">20px</option>
+                                            <option value="10px">10px</option>
+                                            <option value="5px">5px</option>
+                                            <option value="0px">0px</option>
+                                            <option value="5em">5em</option>
+                                            <option value="4em">4em</option>
+                                            <option value="3em">3em</option>
+                                            <option value="2em">2em</option>
+                                            <option value="1em">1em</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr class="my-1">
+                                <div class="btn-group btn-group-sm m-1" role="group">
                                     <button type="button" class="btn btn-success" :class="{ active: focusElement && focusElement?.style?.textAlign=='left' }" onpointerdown="docb.toggleStyleFocusElement('textAlign','left');return false;"><i class="bi bi-text-left"></i></button>
                                     <button type="button" class="btn btn-success" :class="{ active: focusElement && focusElement?.style?.textAlign=='center' }" onpointerdown="docb.toggleStyleFocusElement('textAlign','center');return false;"><i class="bi bi-text-center"></i></button>
                                     <button type="button" class="btn btn-success" :class="{ active: focusElement && focusElement?.style?.textAlign=='right' }" onpointerdown="docb.toggleStyleFocusElement('textAlign','right');return false;"><i class="bi bi-text-right"></i></button>
                                 </div>
                                 <select class="form-select form-select-sm m-1" style="width: 8em;" 
-                                    onchange="docb.toggleStyleFocusElement('fontFamily',this.value);return false;" 
-                                    :value="focusElement?.style?.fontFamily??''"
+                                    v-model="focusElement.style.fontFamily"
                                 >
                                     <option value="">#FONT#</option>
                                     <option value="">Default</option>
@@ -445,7 +513,7 @@
                             <button type="button" class="btn btn-primary btn-sm m-1" onclick="lfe.toggle()" >lfe.toggle()</button>
                             
                             <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.clear()" >clear</button>
-                            <button type="button" class="btn btn-primary btn-sm m-1" onclick='docb.clearAndInitFromHtml(`<div data-type="layout" layout="normal"><h1 data-type="block">제목 부분</h1></div><div data-type="layout" layout="normal"><p data-type="block" data-focus="" >내용부분</p></div>`)' >clearAndInit</button>
+                            <button type="button" class="btn btn-primary btn-sm m-1" onclick='docb.clearAndInitFromHtml(`<div data-type="zone" data-layout="normal"><h1 data-type="block">제목 부분</h1></div><div data-type="zone" data-layout="normal"><p data-type="block" data-focus="" >내용부분</p></div>`)' >clearAndInit</button>
                             <form>
 
                             </form>
@@ -485,7 +553,7 @@
                                 </div>
                             </div>
                             
-                            <div class="d-flex flex-wrap gap-1" hide-focus-type="layout" hide-focus-status="readonly" hide-focus-moving>
+                            <div class="d-flex flex-wrap gap-1" hide-focus-type="zone" hide-focus-status="readonly" hide-focus-moving>
     
                                 <div class="btn-group btn-group-sm mb-1  " role="group">
                                     <div class="col btn btn-success p-0">

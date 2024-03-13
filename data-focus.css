@@ -8,7 +8,7 @@
     /* display: none; */
 }
 .app-docb[data-focus-type="block"] *[hide-focus-type~="block"] ,
-.app-docb[data-focus-type="layout"] *[hide-focus-type~="layout"] ,
+.app-docb[data-focus-type="zone"] *[hide-focus-type~="zone"] ,
 .app-docb[data-focus-type="content"] *[hide-focus-type~="content"] ,
 .app-docb[data-focus-type] *[hide-focus-type~="all"],
 .app-docb[data-focus-status~="readonly"] *[hide-focus-status~="readonly"],
@@ -23,7 +23,7 @@
     display: none !important;
 }
 .app-docb[data-focus-type="block"] *[show-focus-type~="block"] ,
-.app-docb[data-focus-type="layout"] *[show-focus-type~="layout"] ,
+.app-docb[data-focus-type="zone"] *[show-focus-type~="zone"] ,
 .app-docb[data-focus-type="content"] *[show-focus-type~="content"] ,
 .app-docb[data-focus-type] *[show-focus-type~="all"],
 .app-docb[data-focus-status~="readonly"] *[show-focus-status~="readonly"],

@@ -16,7 +16,7 @@ class DocumentBuilder{
         this.lastFocusElement = null;
 
 
-        let builder_innerHTML = this.builderContainer.querySelector('.builder').innerHTML
+        
 
 
 
@@ -32,14 +32,7 @@ class DocumentBuilder{
             this.shadowRoot.append(el);
         })
 
-        // this.builder = document.createElement('div');
-        // this.builder.classList.add('builder');
-        // console.log(this.builder);
-        // this.shadowRoot.append(this.builder);
-        
-        // this.builder.innerHTML = builder_innerHTML
         this.builder = this.shadowRoot.querySelector('.builder')
-        this.doc = this.builder.querySelector('.doc')
         this.page = this.builder.querySelector('.page')
 
 
@@ -76,25 +69,11 @@ class DocumentBuilder{
     cbclick=(event)=>{ this.onclick(event); }
     onclick(event){
         console.log('onclick');
-        // event.stopPropagation();
-        // event.preventDefault();
         if(event.target != this.focusElement){
             this.focus(event.target)
         }
     }
-    cbkeypress=(event)=>{ this.onkeypress(event); }
-    onkeypress(event){
-        console.log('onkeypress');
-        // event.stopPropagation();
-        // event.preventDefault();
-        return false;
-    }
-    cbkeydown=(event)=>{ this.onkeydown(event); }
-    onkeydown(event){
-        console.log('onkeydown');
-        // event.stopPropagation();
-        // event.preventDefault();
-    }
+
     get focusElement(){
         return this.builder.querySelector('*[data-focus]');
     }
@@ -103,16 +82,6 @@ class DocumentBuilder{
         // this.vapp.focusElement = Vue.ref(target);
         this.vapp.focusElement = target;
         console.log(this.vapp);
-        this.syncFocusElement();
-    }
-    syncFocusElement(){
-        // const focusElement = this.focusElement
-        // document.querySelectorAll('*[data-sync-value]').forEach((el)=>{
-        //     let syncValue = el.dataset.syncValue;
-        //     let r = eval(syncValue)
-        //     console.log(r);
-        //     el.value = r;
-        // })
     }
     get doc(){
         return this.builder.querySelector('.doc');
@@ -249,7 +218,7 @@ class DocumentBuilder{
     toPreviousSibling(el,target=null){
         if(!el){ console.warn('대상 element가 없습니다.'); return false; }
         if(!target){
-            if(!(el.parentElement.dataset.type=='layout' || el.parentElement.dataset.type=='block')){ console.warn('부모가 data-type="layout" or data-type="block" 이 아닙니다.'); return false; }
+            if(!(el.parentElement.dataset.type=='zone' || el.parentElement.dataset.type=='block')){ console.warn('부모가 data-type="zone" or data-type="block" 이 아닙니다.'); return false; }
             if(!el.previousElementSibling){ console.warn('이전 이웃이 없습니다.'); return false; }
             target = el.previousElementSibling;
         }
@@ -259,7 +228,7 @@ class DocumentBuilder{
     toNextSibling(el,target=null){
         if(!el){ console.warn('대상 element가 없습니다.'); return false; }
         if(!target){
-            if(!(el.parentElement.dataset.type=='layout' || el.parentElement.dataset.type=='block')){ console.warn('부모가 data-type="layout" or data-type="block" 이 아닙니다.'); return false; }
+            if(!(el.parentElement.dataset.type=='zone' || el.parentElement.dataset.type=='block')){ console.warn('부모가 data-type="zone" or data-type="block" 이 아닙니다.'); return false; }
             if(!el.nextElementSibling){ console.warn('다음 이웃이 없습니다.'); return false; }
             target = el.nextElementSibling;
         }
@@ -282,13 +251,13 @@ class DocumentBuilder{
         if(!focusElement || !toEl || focusElement===toEl || focusElement.contains(toEl) || toEl.classList.contains('page') || focusElement.classList.contains('page')){
             // 동작하면 안되는 조건
 
-        }else if(focusElement.dataset.type=='layout'){
-            if(toEl.dataset.type=='layout'){
+        }else if(focusElement.dataset.type=='zone'){
+            if(toEl.dataset.type=='zone'){
                 if(focusElement.nextElementSibling === toEl){ this.toNextSibling(focusElement,toEl); }
                 else{ this.toPreviousSibling(focusElement,toEl); }
             }
         }else if(focusElement.dataset.type=='block'){
-            if(toEl.dataset.type=='layout'){
+            if(toEl.dataset.type=='zone'){
                 toEl.append(focusElement)
             }else if(toEl.dataset.type=='block'){
                 if(focusElement.nextElementSibling === toEl){ this.toNextSibling(focusElement,toEl); }
