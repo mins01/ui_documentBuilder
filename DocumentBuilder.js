@@ -6,10 +6,12 @@ class DocumentBuilder{
     page = null;
     lastFocusElement = null;
     shadow = null;
-    constructor(builderContainer,lfe,appContainer){
+    vaoo = null;
+    constructor(builderContainer,lfe,appContainer,vapp){
         this.builderContainer = builderContainer;
         this.appContainer = appContainer
         this.lfe = lfe
+        this.vapp = vapp;
         
         this.lastFocusElement = null;
 
@@ -98,6 +100,9 @@ class DocumentBuilder{
     }
     set focusElement(target){
         target.dataset.focus="";
+        // this.vapp.focusElement = Vue.ref(target);
+        this.vapp.focusElement = target;
+        console.log(this.vapp);
         this.syncFocusElement();
     }
     syncFocusElement(){
@@ -134,7 +139,7 @@ class DocumentBuilder{
     
     focus(el,force=false){
         if(!el){return false;}
-        
+        if(!this.editMode){return false;}
         const target = el.closest('*[data-type]');
         if(!target){return false;}
         
@@ -153,7 +158,7 @@ class DocumentBuilder{
 
         if(target.dataset.status && target.dataset.status?.indexOf('readonly')!==-1){
 
-        }else if(target.dataset.type=='block' || target.dataset.type=="content"){
+        }else if(target.dataset.type=='block'){
         
             target.contentEditable = true
             target.focus();
@@ -363,10 +368,12 @@ class DocumentBuilder{
     styleFocusElement(k,v){
         if(!this.focusElement) return false;
         this.focusElement.style[k]=v;
+        this.redrawVapp()
     }
     clearStyleFocusElement(k){
         if(!this.focusElement) return false;
         this.focusElement.style[k]=null;
+        this.redrawVapp()
     }
     toggleStyleFocusElement(k,v){
         if(!this.focusElement) return false;
@@ -375,7 +382,25 @@ class DocumentBuilder{
         }else{
             this.focusElement.style[k]=v;
         }
-        
+        this.redrawVapp()   
+    }
+    propertyFocusElement(k,v){
+        if(!this.focusElement) return false;
+        if(this.focusElement[k]==v){
+            this.focusElement[k]=null;
+        }else{
+            this.focusElement[k]=v;
+        }
+        this.redrawVapp()   
+    }
+    attributeFocusElement(k,v){
+        if(!this.focusElement) return false;
+        if(this.focusElement.getAttribute(k)==v){
+            this.focusElement.removeAttribute(k);
+        }else{
+            this.focusElement.setAttribute(k,v)
+        }
+        this.redrawVapp()   
     }
 
     toHtml(){
@@ -388,4 +413,28 @@ class DocumentBuilder{
         return this.page.innerHTML.replace(/contenteditable="true"/g,'');
     }
 
+    // 닫는 태그가 필요없는 태그
+    isSelfClosingTag(tagName){
+        return ['AREA','BASE','BR','COL','COMMAND','EMBED','HR','IMG','INPUT','KEYGEN','LINK','META','PARAM','SOURCE','TRACK','WBR'].includes(tagName.toUpperCase());
+    }
+
+
+    download(el,name,type){
+        const file = new File([el],name,{type:type??'text/plain'});
+        let url = URL.createObjectURL(file);
+        const a = document.createElement('a')
+        a.href = url;
+        a.download = file.name;
+        a.click();
+  
+        setTimeout(function () {
+          URL.revokeObjectURL(url);
+        }, 4E4); // 40s
+    }
+
+
+    redrawVapp(){
+        this.vapp.$forceUpdate()
+    }
+    
 }

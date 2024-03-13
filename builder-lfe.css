@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+/* lfe */
+.lfe-container{
+    display: none;
+}
+.edit-mode .lfe-container{
+    display: block;
+}

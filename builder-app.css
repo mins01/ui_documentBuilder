@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+
+.app-layout{
+    --navbar-height:0px;
+}
+
+/* lfe */
+.lfe-container{
+    display: none;
+}
+.edit-mode .lfe-container{
+    display: block;
+}
+
+.app-docb .side-attrs{
+
+}

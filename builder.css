@@ -29,46 +29,30 @@
     /* outline: 2px dashed #999; */
     outline-offset: -2px;
 }
-.page{
-    margin:var(--s-20);
-    padding:var(--s-20);
-    /* font-size: var(--font-size); */
-    font-size: 20px;
+.builder .page{
+    margin:var(--s-20,0);
+    padding:var(--s-20,0);
     box-shadow: 0px 0px 5px #00000099;
 }
-.doc h1{font-size: 2.5em;quotes:"h1" "<h1>"}
-.doc h2{font-size: 2.0em;quotes:"h2" "h2"}
-.doc h3{font-size: 1.75em;quotes:"h3" "<h3>"}
-.doc h4{font-size: 1.5em;quotes:"h4" "<h4>"}
-.doc h5{font-size: 1.25em;quotes:"h5" "<h5>"}
-.doc h6{font-size: 1.0em;quotes:"h6" "<h6>"}
 
 
 
-.doc *[data-type]{
+.builder .doc *[data-type]{
     position: relative;
     min-height: 1.5em;
     min-width: 1.5em
 }
-.doc *[data-type=layout]{
+.builder .doc *[data-type=layout]{
     margin:var(--s-5);
     padding:var(--s-10);
 }
-.doc *[data-type="block"]{
+.builder .doc *[data-type="block"]{
     /* margin:var(--s-5); */
     margin:0;
     padding:var(--s-5);
 }
 
-/* .doc *[data-type="block"] *:not([data-type]){
-    font-size: inherit !important;
-} */
-.doc *[data-type="block"]{
-    display: block;
-}
-.doc *[data-type="content"]{
-    display: inline-block;
-}
+
 
 
 /* element dashed box */
@@ -145,65 +129,10 @@
     100%{outline-color: #0066ff33;}
 }
 
-/* 레이아웃 설정부 */
-.doc *[data-type="layout"][data-component~="flex"]{
-    display: flex;
-    flex-wrap: wrap;
-}
-.doc *[data-type="layout"][data-component~="flex-column"]{
-    flex-direction: column;
-}
-.doc *[data-type="layout"][data-component~="flex"] > *{
-    flex: 1 1 auto;
-}
-.doc *[data-type="layout"][data-component~="flex-2"] > *{
-    flex: 1 0 50%;
-}
-.doc *[data-type="layout"][data-component~="flex-3"] > *{
-    flex: 1 0 33.33%;
-}
-.doc *[data-type="layout"][data-component~="flex-4"] > *{
-    flex: 1 0 25%;
-}
 
 
-.doc *[data-type="layout"][data-component~="grid"]{
-    display: grid;
-}
-.doc *[data-type="layout"][data-component~="grid-2"]{
-    grid-template-columns: repeat(2, 1fr);
-}
-.doc *[data-type="layout"][data-component~="grid-3"]{
-    grid-template-columns: repeat(3, 1fr);
-}
-.doc *[data-type="layout"][data-component~="grid-4"]{
-    grid-template-columns: repeat(4, 1fr);
-}
 
 
-/* 태그별 전용 설정 */
-.builder .doc button[data-type="block"]{
-    display: block;
-    margin-left: auto; margin-right: auto;
-    width: 100%;
-}
-.doc img{
-    max-width: 100%;
-    max-height: 100%;
-    padding:0 !important;
-    margin:0 !important;
-}
-.doc figure{
-    padding:0 !important;
-}
-.doc figure > img{
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
-    width: 100%;
-    padding:0 !important;
-    margin:0 !important;
-}
 
 
 /* .builder .doc button[data-type="block"]::before{
@@ -231,10 +160,3 @@
 
 
 
-/* lfe */
-.lfe-container{
-    display: none;
-}
-.edit-mode .lfe-container{
-    display: block;
-}
