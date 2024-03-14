@@ -78,10 +78,10 @@ class DocumentBuilder{
         return this.builder.querySelector('*[data-focus]');
     }
     set focusElement(target){
-        target.dataset.focus="";
-        // this.vapp.focusElement = Vue.ref(target);
+        if(target){
+            target.dataset.focus="";
+        }
         this.vapp.focusElement = target;
-        console.log(this.vapp);
     }
     get doc(){
         return this.builder.querySelector('.doc');
@@ -110,8 +110,19 @@ class DocumentBuilder{
         if(!el){return false;}
         if(!this.editMode){return false;}
         const target = el.closest('*[data-type]');
-        if(!target){return false;}
-        
+        if(!target){
+            this.blur();
+            this.focusElement = target;
+            return false;
+        }
+
+        if(target.dataset.editable){
+            target.contentEditable = true
+        }else{
+            target.contentEditable = false;
+            target.removeAttribute('contentEditable');
+        }
+
         if(this.lastFocusElement == target){
             return false;
         }else{
@@ -123,13 +134,11 @@ class DocumentBuilder{
         if(target.dataset.type) this.appContainer.dataset.focusType = target.dataset.type;
         if(target.dataset.status) this.appContainer.dataset.focusStatus = target.dataset.status;
         if(target.nodeName ) this.appContainer.dataset.focusNodeName = target.nodeName ;
-        console.log(this.appContainer.dataset);
+        // console.log(this.appContainer.dataset);
 
-        if(target.dataset.status && target.dataset.status?.indexOf('readonly')!==-1){
-
-        }else if(target.dataset.type=='block'){
+        if(target.dataset.type=='block'){
         
-            target.contentEditable = true
+            
             target.focus();
             if(target.textContent.length == 0|| target.tagName=='BUTTON'){
                 const range = window.document.createRange();
@@ -398,7 +407,7 @@ class DocumentBuilder{
   
         setTimeout(function () {
           URL.revokeObjectURL(url);
-        }, 4E4); // 40s
+        }, 60000); //60s
     }
 
 

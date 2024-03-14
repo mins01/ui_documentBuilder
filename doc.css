@@ -38,6 +38,15 @@
 }
 
 /* 레이아웃 설정부 */
+.doc *[data-layout~="inline"]{
+    display: inline;
+}
+.doc *[data-layout~="block"]{
+    display: block;
+}
+.doc *[data-layout~="inline-block"]{
+    display: inline-block;
+}
 .doc *[data-layout~="flex"]{
     display: flex;
     flex-wrap: wrap;
@@ -84,11 +93,11 @@
 .doc img{
     max-width: 100%;
     max-height: 100%;
-    padding:0 !important;
-    margin:0 !important;
+    padding:0;
+    margin:0;
 }
 .doc figure{
-    padding:0 !important;
+    padding:0;
 }
 .doc figure > img{
     max-width: 100%;

@@ -267,10 +267,10 @@
                             <div class="builder">
                                 <div class="doc">
                                     <div class="page" data-type="zone" data-layout="page" data-status="fixed" style="max-width: 600px; margin: 0px auto; width: 600px;" data-focus="">
-                                        <h1 data-type="block" style="background-color: rgb(107, 0, 0); color: rgb(255, 255, 255);  max-width:300px;width:300px; margin:0 auto;text-align: center;">
+                                        <h1 data-type="block" data-editable="true" style="background-color: rgb(107, 0, 0); color: rgb(255, 255, 255);  max-width:300px;width:300px; margin:0 auto;text-align: center;">
                                             <b>제목</b>
                                         </h1>
-                                        <div data-type="block" >
+                                        <div data-type="block" data-editable="true">
                                             <div style="text-align: center;">
                                                 <span style="font-size: var(--font-size);">뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라 뭐라</span>
                                             </div>
@@ -286,10 +286,8 @@
                                             
                                             <div data-type="zone" data-layout="grid grid-4"><div data-type="block">1</div><div data-type="block">2</div><div data-type="block">3</div><div data-type="block">4</div></div><div data-type="zone" data-layout="div">
                                                 <div data-type="block" style="text-align: center;">
-                                                    <button data-type="content" style="background-color: rgb(49, 146, 47); color: rgb(255, 255, 255); max-width: 300px; width: 300px;">
-                                                        <span style="background-color: rgb(41, 153, 59);">
-                                                            <font size="7">버튼</font>
-                                                        </span>
+                                                    <button data-type="content" data-editable="true" style="background-color: rgb(49, 146, 47); color: rgb(255, 255, 255); max-width: 300px; width: 300px;">
+                                                        <font size="7">버튼</font>
                                                     </button>
                                                 </div>
                                             </div>
@@ -307,8 +305,8 @@
                                 <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.clear()" ><i class="bi bi-trash"></i> clear</button>
                                 <button type="button" class="btn btn-primary btn-sm m-1" onclick="docb.download(docb.doc.outerHTML,'doc.html','text/html')" ><i class="bi bi-filetype-html"></i> download HTML</button>
                             </div>
-                            <h4>Layout</h4>
-                            <div class="">
+                            <div class="" v-if="!!focusElement" >
+                                <h4>Layout</h4>
                                 <div class="btn-group btn-group-sm m-1  " role="group" hide-focus-moving>
                                     <div class="col btn btn-success p-0">
                                         <select class="form-select form-select-sm" style="width: 6em;" 
@@ -317,7 +315,10 @@
                                             :disabled="focusElement?.dataset?.layout=='page'"
                                         >
                                             <option value="">#DATA-LAYOUT#</option>
-                                            <option value="">normal</option>
+                                            <option value="">default</option>
+                                            <option value="block">block</option>
+                                            <option value="inline">inline</option>
+                                            <option value="inline-block">inline-block</option>
                                             <option value="flex">flex</option>
                                             <option value="flex flex-2">flex flex-2</option>
                                             <option value="flex flex-3">flex flex-3</option>
@@ -333,8 +334,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <h4>Style</h4>
                             <div class=""  v-if="!!focusElement" >
+                                <h4>Style</h4>
                                 
                                 <div class="btn-group btn-group-sm m-1" role="group">
                                     <button type="button" class="btn btn-success" :class="{ active: focusElement && focusElement?.style?.margin=='0px auto 0px 0px' }" onpointerdown="docb.toggleStyleFocusElement('margin','0px auto 0px 0px');return false;"><i class="bi bi-align-start"></i></button>
@@ -348,8 +349,6 @@
                                             xonchange="docb.styleFocusElement('maxWidth',this.value);docb.styleFocusElement('width',this.value);return false;" 
                                             v-model="focusElement.style.maxWidth"
                                             @change="focusElement.style.width = focusElement.style.maxWidth"
-                                            @blur="console.log('x');"
-                                            onfocus="return false;"
                                         >
                                             <option value="">#MAX-WIDTH#</option>
                                             <option value="">Default</option>
@@ -390,6 +389,118 @@
                                         </select>
                                     </div>
                                 </div>
+                                <hr class="my-1">
+                                <h6>PADDING(안쪽 여백)</h6>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <div class="btn btn-success p-0">
+                                            <select class="form-select form-select-sm" style="width: 6em;" v-model="focusElement.style.paddingTop">
+                                                <option value="">#PADDING-TOP#</option>
+                                                <option value="">Default</option>
+                                                <option value="auto">auto</option>
+                                                <option value="20px">20px</option>
+                                                <option value="10px">10px</option>
+                                                <option value="5px">5px</option>
+                                                <option value="0px">0px</option>
+                                            </select>
+                                        </div>    
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <div class="btn btn-success p-0">
+                                            <select class="form-select form-select-sm" style="width: 6em;" v-model="focusElement.style.paddingLeft">
+                                                <option value="">#PADDING-LEFT#</option>
+                                                <option value="">Default</option>
+                                                <option value="auto">auto</option>
+                                                <option value="20px">20px</option>
+                                                <option value="10px">10px</option>
+                                                <option value="5px">5px</option>
+                                                <option value="0px">0px</option>
+                                            </select>
+                                        </div>    
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <div class="btn btn-success p-0">
+                                            <select class="form-select form-select-sm" style="width: 6em;" v-model="focusElement.style.paddingRight">
+                                                <option value="">#PADDING-RIGHT#</option>
+                                                <option value="">Default</option>
+                                                <option value="auto">auto</option>
+                                                <option value="20px">20px</option>
+                                                <option value="10px">10px</option>
+                                                <option value="5px">5px</option>
+                                                <option value="0px">0px</option>
+                                            </select>
+                                        </div>    
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <div class="btn btn-success p-0">
+                                            <select class="form-select form-select-sm" style="width: 6em;" v-model="focusElement.style.paddingBottom">
+                                                <option value="">#PADDING-BOTTOM#</option>
+                                                <option value="">Default</option>
+                                                <option value="auto">auto</option>
+                                                <option value="20px">20px</option>
+                                                <option value="10px">10px</option>
+                                                <option value="5px">5px</option>
+                                                <option value="0px">0px</option>
+                                            </select>
+                                        </div>    
+                                    </div>
+                                </div>
+                                <h6>MARGIN(바깥쪽 여백)</h6>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <div class="btn btn-success p-0">
+                                            <select class="form-select form-select-sm" style="width: 6em;" v-model="focusElement.style.marginTop">
+                                                <option value="">#MARGIN-TOP#</option>
+                                                <option value="">Default</option>
+                                                <option value="auto">auto</option>
+                                                <option value="20px">20px</option>
+                                                <option value="10px">10px</option>
+                                                <option value="5px">5px</option>
+                                                <option value="0px">0px</option>
+                                            </select>
+                                        </div>    
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <div class="btn btn-success p-0">
+                                            <select class="form-select form-select-sm" style="width: 6em;" v-model="focusElement.style.marginLeft">
+                                                <option value="">#MARGIN-LEFT#</option>
+                                                <option value="">Default</option>
+                                                <option value="auto">auto</option>
+                                                <option value="20px">20px</option>
+                                                <option value="10px">10px</option>
+                                                <option value="5px">5px</option>
+                                                <option value="0px">0px</option>
+                                            </select>
+                                        </div>    
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <div class="btn btn-success p-0">
+                                            <select class="form-select form-select-sm" style="width: 6em;" v-model="focusElement.style.marginRight">
+                                                <option value="">#MARGIN-RIGHT#</option>
+                                                <option value="">Default</option>
+                                                <option value="auto">auto</option>
+                                                <option value="20px">20px</option>
+                                                <option value="10px">10px</option>
+                                                <option value="5px">5px</option>
+                                                <option value="0px">0px</option>
+                                            </select>
+                                        </div>    
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <div class="btn btn-success p-0">
+                                            <select class="form-select form-select-sm" style="width: 6em;" v-model="focusElement.style.marginBottom">
+                                                <option value="">#MARGIN-BOTTOM#</option>
+                                                <option value="">Default</option>
+                                                <option value="auto">auto</option>
+                                                <option value="20px">20px</option>
+                                                <option value="10px">10px</option>
+                                                <option value="5px">5px</option>
+                                                <option value="0px">0px</option>
+                                            </select>
+                                        </div>    
+                                    </div>
+                                </div>
+
                                 <hr class="my-1">
                                 <div class="btn-group btn-group-sm m-1" role="group">
                                     <label class="btn btn-success p-0" ><input type="color" style="height: 1.8em;width:1.8em" 
@@ -436,11 +547,6 @@
                                             <option value="10px">10px</option>
                                             <option value="5px">5px</option>
                                             <option value="0px">0px</option>
-                                            <option value="5em">5em</option>
-                                            <option value="4em">4em</option>
-                                            <option value="3em">3em</option>
-                                            <option value="2em">2em</option>
-                                            <option value="1em">1em</option>
                                         </select>
                                     </div>
                                 </div>
@@ -498,7 +604,7 @@
                                 </div>
 
                                 <label class="input-group input-group-sm m-1 w-auto">
-                                    <span class="input-group-text">TEXT</span>
+                                    <span class="input-group-text">innerHTML</span>
                                     <input type="text" class="form-control" placeholder="HTML" :value="focusElement?.innerHTML??''" oninput="docb.propertyFocusElement('innerHTML',this.value)" :disabled="focusElement && focusElement.dataset.type!='content'" >
                                 </label>
     
@@ -553,7 +659,7 @@
                                 </div>
                             </div>
                             
-                            <div class="d-flex flex-wrap gap-1" hide-focus-type="zone" hide-focus-status="readonly" hide-focus-moving>
+                            <div class="d-flex flex-wrap gap-1" v-if="focusElement && focusElement.dataset.editable=='true'">
     
                                 <div class="btn-group btn-group-sm mb-1  " role="group">
                                     <div class="col btn btn-success p-0">
