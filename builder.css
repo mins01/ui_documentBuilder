@@ -3,6 +3,15 @@
 .app-layout{
     /* --navbar-height:56px; */
     --navbar-height:0px;
+    
+}
+html{
+    
+    scrollbar-color: var(--bs-primary) var(--bs-secondary-bg);
+}
+.app-layout *{
+    scrollbar-width:thin;
+    scrollbar-color: var(--bs-success) var(--bs-secondary-bg);
 }
 
 .builder{
