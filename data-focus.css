@@ -1,5 +1,5 @@
 @charset "utf-8";
-
+/* vue로 옮기면서 점점 안 쓰고 있음 */
 /* lfe 제어*/
 .lfe-container{
     z-index: 20;
@@ -32,6 +32,3 @@
 }
 
 
-.app-docb[data-focus-moving="true"]  *[hide-focus-moving]{
-    display: none !important;
-}

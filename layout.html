@@ -74,7 +74,7 @@
             docb.addEventListener();
             docb.editMode = true;
 
-            // vapp.docb = docb
+            vapp.docb = docb
             vapp.focusElement = docb.focusElement;
             // console.log(vapp.focusElement);
             
@@ -162,111 +162,78 @@
             <div class="container-fluid flex-fill d-flex" >
                 <div class="row  flex-fill flex-nowrap">
                     <div id="side-left" class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light overflow-y-auto" style="max-width: 300px; font-size: 12px; height: calc(100vh - var(--navbar-height));position: sticky;top:0;left;0">
-                        <div class="d-flex flex-column align-items-center align-items-stretch align-items-sm-start px-3 pt-2  x-min-vh-100">
-                            <div class="w-100 mb-3" >
-                                <h1 class="fs-4 text-center">DOCBUILDER</h1>
+                        <h1 class="fs-4 text-center py-3">DOCBUILDER</h1>
+                        <div class="text-secondary">
+                            
+                            <h3 class="text-center ">Element</h3>
+                            <h4>Layout</h4>
+                            <div>
+                                <div class="d-flex flex-wrap side-left-menus">
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'block'})"> BLOCK </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'inline'})"> inline </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'inline-block'})"> inline-block </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex'})"> FLEX </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex flex-2'})"> FLEX-2 </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex flex-3'})"> FLEX-3 </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex flex-4'})"> FLEX-4 </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex flex-5'})"> FLEX-5 </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid grid-2'})"> grid-2 </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid grid-3'})"> grid-3 </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid grid-4'})"> grid-4 </button>
+                                    </div>
+                                    <div class="col-12 pb-1">
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid grid-5'})"> grid-5 </button>
+                                    </div>
+                                </div>
                             </div>
-                            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                                <li class="pb-3">
-                                    <div>Layout(틀)</div>
-                                    <ul class="nav ms-3 d-flex flex-column">
-                                        <li class="w-100">
-                                            <div class="nav-link px-0">FRAME</div>
-                                            <ul class="nav ms-3  d-flex flex-row gap-3">
-                                                <!-- <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'normal'}))"> NORMAL </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'normal'}))"> NORMAL </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'flex'}))"> FLEX - ROW</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'flex-2'}))"> FLEX - ROW - 2</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'flex-3'}))"> FLEX - ROW - 3 </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'flex-4'}))"> FLEX - ROW - 4</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'flex-5'}))"> FLEX - ROW - 5</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'flex-column'}))"> FLEX - COLUMN</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'grid-2'}))"> GRID - 2 x N</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'grid-3'}))"> GRID - 3 x N</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'grid-4'}))"> GRID - 4 x N</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.execCommand('insertElement',null,docb.createElement('div',{'data-type':'layout','data-layout':'col'}))"> COL</button></li> -->
-    
-                                                <hr>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'div'})"> NORMAL </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex'})"> FLEX - ROW</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex flex-2'})"> FLEX - ROW - 2</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex flex-3'})"> FLEX - ROW - 3 </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex flex-4'})"> FLEX - ROW - 4</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex flex-5'})"> FLEX - ROW - 5</button></li>
-                                                <!-- <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'flex-column'})"> FLEX - COLUMN</button></li> -->
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid grid-2'})"> GRID - 2 x N</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid grid-3'})"> GRID - 3 x N</button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'grid grid-4'})"> GRID - 4 x N</button></li>
-                                                <!-- <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'layout','data-layout':'col'})"> COL</button></li> -->
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="pb-3">
-                                    <div>BLOCK(내용틀)</div>
-                                    <ul class="nav ms-3">
-                                        <li class="w-100">
-                                            <div class="nav-link px-0">HEAD</div>
-                                            <ul class="nav ms-3  d-flex flex-row gap-3">
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h1',{'data-type':'block'})"> H1 </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h2',{'data-type':'block'})"> H2 </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h3',{'data-type':'block'})"> H3 </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h4',{'data-type':'block'})"> H4 </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h5',{'data-type':'block'})"> H5 </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('h6',{'data-type':'block'})"> H6 </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'block'})"> DIV </button></li>
-                                            </ul>
-                                        </li>
-                                        <li class="w-100">
-                                            <div class="nav-link px-0">TEXT</div>
-                                            <ul class="nav ms-3  d-flex flex-row gap-3">
-                                                
-                                                
-                                            </ul>
-                                        </li>
-                                        <li class="w-100">
-                                            <div class="nav-link px-0">CONTENT</div>
-                                            <ul class="nav ms-3  d-flex flex-row gap-3">
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('a',{'data-type':'block'})"> LINK </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('button',{'data-type':'block'},null)"> BUTTON </button></li>
-                                                <!-- <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('img',{'data-type':'block','src':'20240308182630505.jpg'})"> IMAGE </button></li> -->
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('figure',{'data-type':'block'},null,[
-                                                    docb.createElement('img',{'data-type':'content','src':'20240308182630505.jpg'})
-                                                ])"> IMAGE </button></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="pb-3">
-                                    <div>INLINE(내용)</div>
-                                    <ul class="nav ms-3">
-                                        <li class="w-100">
-                                            <div class="nav-link px-0">TEXT</div>
-                                            <ul class="nav ms-3  d-flex flex-row gap-3">
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('p',{'data-type':'content'})"> PARAGRAPH </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('span',{'data-type':'content'})"> SPAN </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('b',{'data-type':'content'})"> B </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('i',{'data-type':'content'})"> I </button></li>
-                                            </ul>
-                                        </li>
-                                        <li class="w-100">
-                                            <div class="nav-link px-0">CONTENT</div>
-                                            <ul class="nav ms-3  d-flex flex-row gap-3">
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('a',{'data-type':'content','href':'#'},null,'LINK')"> LINK </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('button',{'data-type':'content'})"> BUTTON </button></li>
-                                                <li><button type="button" class="nav-link px-2 rounded border border-1" onclick="docb.appendWithCreateElementToFocusElement('img',{'data-type':'content','src':'20240308182630505.jpg'})"> img </button></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <h4>Edit Block</h4>
+                            <div>
+                                <div class="d-flex flex-wrap side-left-menus">
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('h1',{'data-type':'block','data-editable':'true'})"> H1 </button> </div>
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('h2',{'data-type':'block','data-editable':'true'})"> H2 </button> </div>
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('h3',{'data-type':'block','data-editable':'true'})"> H3 </button> </div>
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('h4',{'data-type':'block','data-editable':'true'})"> H4 </button> </div>
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('h5',{'data-type':'block','data-editable':'true'})"> H5 </button> </div>
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('h6',{'data-type':'block','data-editable':'true'})"> H6 </button> </div>
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('div',{'data-type':'block','data-editable':'true'})"> DIV </button> </div>                                    
+                                </div>
+                            </div>
+                            <h4>Content</h4>
+                            <div>
+                                <div class="d-flex flex-wrap side-left-menus">
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('a',{'data-type':'content','href':'#'},null,'LINK')"> LINK </button> </div>
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('button',{'data-type':'content'})"> BUTTON </button> </div>
+                                    <div class="col-12 pb-1"> <button type="button" class="btn btn-secondary btn-sm w-100" onclick="docb.appendWithCreateElementToFocusElement('img',{'data-type':'content','src':'20240308182630505.jpg'})"> img </button> </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="workplace" class="col">
                         <div class="builder-container" id="docb-container">
                             <div class="builder">
                                 <div class="doc">
-                                    <div class="page" data-type="zone" data-layout="page" data-status="fixed" style="max-width: 600px; margin: 0px auto; width: 600px;" data-focus="">
+                                    <div class="page" data-type="zone" data-layout="page" data-status="fixed readonly" style="max-width: 600px; margin: 0px auto; width: 600px;" data-focus="">
                                         <h1 data-type="block" data-editable="true" style="background-color: rgb(107, 0, 0); color: rgb(255, 255, 255);  max-width:300px;width:300px; margin:0 auto;text-align: center;">
                                             <b>제목</b>
                                         </h1>
@@ -643,22 +610,23 @@
         <div class="lfe-container">
             <div class="lfe-wrap lfe-motion-fade lfe-wrap-caged" id="lfe-wrap-1">
                 <div class="lfe-layer" >
-                    <form action="" class="m-1" onsubmit="return false;">
+                    <form action="" class="m-1" onsubmit="return false;" v-if="!!focusElement">
                         <div class="d-flex flex-wrap gap-1 justify-content-center">
-                            <div  show-focus-type="layout block"  class="d-flex flex-wrap gap-1">
-                                <div class="btn-group btn-group-sm mb-1 vis-focus-type" role="group" hide-focus-status="fixed">
-                                    <button type="button" class="btn btn-primary" onpointerdown="docb.startEventMoveToAsPointerEvent()"><i class="bi bi-arrows-move"></i></button>
+                            <div class="d-flex flex-wrap gap-1" >
+                                <div class="btn-group btn-group-sm mb-1" role="group" v-if="!focusElement.dataset.status?.includes('fixed')">
+                                    <button type="button" class="btn btn-primary" onpointerdown="docb.startEventMoveToAsPointerEvent(event)"><i class="bi bi-arrows-move"></i></button>
                                     <button type="button" class="btn btn-primary" onpointerdown="docb.toPreviousSibling(docb.focusElement);return false;"><i class="bi bi-arrow-up-left"></i></button>
                                     <button type="button" class="btn btn-primary" onpointerdown="docb.toNextSibling(docb.focusElement);return false;"><i class="bi bi-arrow-down-right"></i></button>
                                 </div>
 
+                                <div class="btn-group btn-group-sm mb-1" role="group" v-if="!focusElement.dataset.status?.includes('readonly')">
+                                    <button type="button" class="btn btn-danger" onclick="docb.removeFocusElement();"><i class="bi bi-trash"></i></button>
+                                </div>
                             </div>
-                            <div class="btn-group btn-group-sm mb-1" role="group" >
-                                <button type="button" class="btn btn-danger" onclick="docb.removeFocusElement();"><i class="bi bi-trash"></i></button>
-                            </div>
+                            
                         </div>
                         
-                        <div class="d-flex flex-wrap gap-1" v-if="focusElement && focusElement.dataset.editable=='true'">
+                        <div class="d-flex flex-wrap gap-1" v-if="focusElement && focusElement.dataset.editable=='true' && !isFocusMoving">
 
                             <div class="btn-group btn-group-sm mb-1  " role="group">
                                 <div class="col btn btn-success p-0">

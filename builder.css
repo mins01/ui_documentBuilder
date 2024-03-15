@@ -151,21 +151,21 @@ html{
     content: none;
 } */
 /* quotes */ 
-.builder .doc *[data-type="zone"]{--el-name:"ZONE: " attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc h1[data-type="block"]{--el-name:"BLOCK: <h1>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc h2[data-type="block"]{--el-name:"BLOCK: <h2>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc h3[data-type="block"]{--el-name:"BLOCK: <h3>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc h4[data-type="block"]{--el-name:"BLOCK: <h4>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc h5[data-type="block"]{--el-name:"BLOCK: <h5>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc p[data-type="block"]{--el-name:"BLOCK: <p>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc div[data-type="block"]{--el-name:"BLOCK: <div>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc figure[data-type="block"]{--el-name:"BLOCK: <figure>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc span[data-type="content"]{--el-name:"<span>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc button[data-type="content"]{--el-name:"<button>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc button[data-type="block"]{--el-name:"BLOCK: <button>" attr(data-component) attr(data-layout) attr(data-status); }
-.builder .doc a[data-type="content"]{--el-name:"A: <LINK>" attr(data-component) attr(data-layout) attr(data-status); }
+.builder .doc *[data-type="zone"]{--el-name:"ZONE: "  attr(data-layout) "; " attr(data-status); }
+.builder .doc h1[data-type="block"]{--el-name:"BLOCK: <h1>" attr(data-layout) "; " attr(data-status); }
+.builder .doc h2[data-type="block"]{--el-name:"BLOCK: <h2>" attr(data-layout) "; " attr(data-status); }
+.builder .doc h3[data-type="block"]{--el-name:"BLOCK: <h3>" attr(data-layout) "; " attr(data-status); }
+.builder .doc h4[data-type="block"]{--el-name:"BLOCK: <h4>" attr(data-layout) "; " attr(data-status); }
+.builder .doc h5[data-type="block"]{--el-name:"BLOCK: <h5>" attr(data-layout) "; " attr(data-status); }
+.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-layout) "; " attr(data-status); }
+.builder .doc h6[data-type="block"]{--el-name:"BLOCK: <h6>" attr(data-layout) "; " attr(data-status); }
+.builder .doc p[data-type="block"]{--el-name:"BLOCK: <p>" attr(data-layout) "; " attr(data-status); }
+.builder .doc div[data-type="block"]{--el-name:"BLOCK: <div>" attr(data-layout) "; " attr(data-status); }
+.builder .doc figure[data-type="block"]{--el-name:"BLOCK: <figure>" attr(data-layout) "; " attr(data-status); }
+.builder .doc span[data-type="content"]{--el-name:"<span>" attr(data-layout) "; " attr(data-status); }
+.builder .doc button[data-type="content"]{--el-name:"<button>" attr(data-layout) "; " attr(data-status); }
+.builder .doc button[data-type="block"]{--el-name:"BLOCK: <button>" attr(data-layout) "; " attr(data-status); }
+.builder .doc a[data-type="content"]{--el-name:"A: <LINK>" attr(data-layout) "; " attr(data-status); }
 
 
 

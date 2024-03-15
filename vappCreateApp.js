@@ -3,6 +3,8 @@ let vappCreateApp = Vue.createApp({
       return{
         // docb: Vue.ref(null),
         // focusElement:Vue.ref({}),
+        // docb:Vue.ref(null),
+        isFocusMoving:Vue.ref(false),
         focusElement:Vue.ref(null),
         renderCount:0,
         styleColorToRgb:(color)=>{

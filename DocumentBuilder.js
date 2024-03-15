@@ -7,6 +7,8 @@ class DocumentBuilder{
     lastFocusElement = null;
     shadow = null;
     vaoo = null;
+
+    _isFocusMoving = false;
     constructor(builderContainer,lfe,appContainer,vapp){
         this.builderContainer = builderContainer;
         this.appContainer = appContainer
@@ -14,6 +16,7 @@ class DocumentBuilder{
         this.vapp = vapp;
         
         this.lastFocusElement = null;
+        this.isFocusMoving = false;
 
 
         
@@ -37,6 +40,14 @@ class DocumentBuilder{
 
 
 
+    }
+    get isFocusMoving(){
+        return this._isFocusMoving;
+    }
+    set isFocusMoving(isFocusMoving){
+        this._isFocusMoving = isFocusMoving;
+        this.vapp.isFocusMoving = isFocusMoving;
+        console.log('this.vapp.isFocusMoving',this.vapp.isFocusMoving);
     }
     get editMode(){
         return this.appContainer.classList.contains('edit-mode');
@@ -244,19 +255,22 @@ class DocumentBuilder{
         target.insertAdjacentElement('afterend',el);
         this.lfe.syncPos();
     }
-    startEventMoveToAsPointerEvent(){
-        this.appContainer.dataset.focusMoving="true"
+    startEventMoveToAsPointerEvent(event){
+        event.preventDefault();
+        
+        this.isFocusMoving = true;
         this.shadowRoot.addEventListener('pointermove',this.moveToAsPointerEvent);
         this.shadowRoot.addEventListener('pointerup',(event)=>{
-            delete this.appContainer.dataset.focusMoving;
+            this.isFocusMoving = false;
             this.shadowRoot.removeEventListener('pointermove',this.moveToAsPointerEvent)
         },{once:true});
+        return false;
     }
     moveToAsPointerEvent = (event)=>{
         // console.log(event.x,event.y);
         const focusElement = this.focusElement;
         let toEl = this.shadowRoot.elementFromPoint(event.x,event.y);
-        console.log(toEl);
+        // console.log(toEl);
         if(!focusElement || !toEl || focusElement===toEl || focusElement.contains(toEl) || toEl.classList.contains('page') || focusElement.classList.contains('page')){
             // 동작하면 안되는 조건
 
@@ -319,7 +333,11 @@ class DocumentBuilder{
         return el;
     }
     append(parent,el){
-        parent.append(el);
+        if(parent.contentEditable=="true"){
+            this.execCommand('insertElement',null,el)
+        }else{
+            parent.append(el);
+        }
     }
     /**
      * Document.execCommand() 를 사용한다. Deprecated 상태지만 대체기능이 없다.
