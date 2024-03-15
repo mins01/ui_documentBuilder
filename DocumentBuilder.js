@@ -127,7 +127,7 @@ class DocumentBuilder{
             return false;
         }
 
-        if(target.dataset.editable){
+        if(target.dataset.status?.includes('editable')){
             target.contentEditable = true
         }else{
             target.contentEditable = false;
@@ -334,7 +334,10 @@ class DocumentBuilder{
     }
     append(parent,el){
         if(parent.contentEditable=="true"){
-            this.execCommand('insertElement',null,el)
+            // this.execCommand('insertElement',null,el)
+            const sel = docb.shadowRoot.getSelection();
+            const rng = sel.getRangeAt(0)
+            rng.insertNode(el);
         }else{
             parent.append(el);
         }
@@ -349,8 +352,8 @@ class DocumentBuilder{
         if(!this.focusElement) return false;
         if(commandId=='insertElement'){
             commandId = 'insertHTML';
-            console.log(value);
             value = value.outerHTML;
+            console.log(value);
         }
         return document.execCommand(commandId,showUI,value)
     }

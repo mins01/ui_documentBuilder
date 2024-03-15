@@ -7,3 +7,10 @@
 .edit-mode .lfe-container{
     display: block;
 }
+
+.app-layout .lfe-layer{
+    pointer-events: none !important;
+}
+.app-layout .lfe-layer .pointer-events-all{
+    pointer-events: all;
+}
