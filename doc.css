@@ -21,10 +21,12 @@
     min-height: 1.5em;
     min-width: 1.5em;
     border:0px solid #000000;
+    background-size: 100% 100%;
 }
 .doc *[data-type="zone"]{
     margin:5px;
-    padding:10px;
+    padding:5px;
+    
 }
 .doc *[data-type="block"]{
     margin:0;
